@@ -26,5 +26,5 @@ system/*
 # application/config/config.php
 # application/config/routes.php
 # application/config/constants.php
-application/config
+# application/config
 
