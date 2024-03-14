@@ -94,25 +94,25 @@
             </li>
           <?php endif; ?>
 
-          <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
-            <li id="designationNav">
-              <a href="<?php echo base_url('designations/') ?>">
+          <?php if(in_array('createTrainer', $user_permission) || in_array('updateTrainer', $user_permission) || in_array('viewTrainer', $user_permission) || in_array('deleteTrainer', $user_permission)): ?>
+            <li id="trainerNav">
+              <a href="<?php echo base_url('trainer/') ?>">
                 <i class="fa fa-user"></i> <span>Trainer</span>
               </a>
             </li>
           <?php endif; ?>
 
-          <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
-            <li id="designationNav">
-              <a href="<?php echo base_url('designations/') ?>">
+          <?php if(in_array('createTraining', $user_permission) || in_array('updateTraining', $user_permission) || in_array('viewTraining', $user_permission) || in_array('deleteTraining', $user_permission)): ?>
+            <li id="trainingNav">
+              <a href="<?php echo base_url('trainings/') ?>">
                 <i class="fa fa-files-o"></i> <span>Training</span>
               </a>
             </li>
           <?php endif; ?>
 
-          <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
-            <li id="designationNav">
-              <a href="<?php echo base_url('designations/') ?>">
+          <?php if(in_array('createEvents', $user_permission) || in_array('updateEvents', $user_permission) || in_array('viewEvents', $user_permission) || in_array('deleteEvents', $user_permission)): ?>
+            <li id="eventsNav">
+              <a href="<?php echo base_url('events/') ?>">
                 <i class="fa fa-calendar"></i> <span>Events</span>
               </a>
             </li>
