@@ -65,7 +65,7 @@
           <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
             <li id="designationNav">
               <a href="<?php echo base_url('designations/') ?>">
-                <i class="fa fa-files-o"></i> <span>Designation</span>
+                <i class="fa fa-building"></i> <span>Designation</span>
               </a>
             </li>
           <?php endif; ?>
@@ -73,7 +73,7 @@
           <?php if(in_array('createEmployee', $user_permission) || in_array('updateEmployee', $user_permission) || in_array('viewEmployee', $user_permission) || in_array('deleteEmployee', $user_permission)): ?>
             <li id="employeeNav">
               <a href="<?php echo base_url('employee/') ?>">
-                <i class="fa fa-files-o"></i> <span>Employee</span>
+                <i class="fa fa-user"></i> <span>Employee</span>
               </a>
             </li>
           <?php endif; ?>
