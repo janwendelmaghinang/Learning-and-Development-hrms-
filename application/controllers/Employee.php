@@ -28,7 +28,7 @@ class Employee extends Admin_Controller
 		}
 		$this->data['role'] = $this->model_groups->getRoleByName();
         $this->data['departments'] = $this->model_departments->getDepartmentData();
-		$this->render_template('Employees/index', $this->data);	
+		$this->render_template('employees/index', $this->data);	
 	}	
 
 	/*
