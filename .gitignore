@@ -22,7 +22,7 @@ index.php
 system/*
 
 # Ignore any sensitive or environment-specific files
-/application/config/database.php
+!application/config/database.php
 /application/config/config.php
 /application/config/routes.php
 /application/config/constants.php
