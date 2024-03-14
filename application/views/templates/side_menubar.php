@@ -86,9 +86,9 @@
             </li>
           <?php endif; ?>
    
-          <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
-            <li id="designationNav">
-              <a href="<?php echo base_url('designations/') ?>">
+          <?php if(in_array('createPerformance', $user_permission) || in_array('updatePerformance', $user_permission) || in_array('viewPerformance', $user_permission) || in_array('deletePerformance', $user_permission)): ?>
+            <li id="PerformanceNav">
+              <a href="<?php echo base_url('Performance/') ?>">
                 <i class="fa fa-flag"></i> <span>Performance</span>
               </a>
             </li>
