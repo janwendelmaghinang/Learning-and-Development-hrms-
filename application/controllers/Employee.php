@@ -11,8 +11,7 @@ class Employee extends Admin_Controller
 		$this->not_logged_in();
 
 		$this->data['page_title'] = 'Employee';
-
-		$this->load->model('model_Employees');
+		$this->load->model('model_employees');
 		$this->load->model('model_departments');
 		$this->load->model('model_designations');
 		$this->load->model('model_groups');
@@ -41,7 +40,7 @@ class Employee extends Admin_Controller
 	public function fetchEmployeeDataById($id) 
 	{
 		if($id) {
-			$data = $this->model_Employees->getEmployeeData($id);
+			$data = $this->model_employees->getEmployeeData($id);
 			echo json_encode($data);
 		}
 
@@ -56,7 +55,7 @@ class Employee extends Admin_Controller
 	{
 		$result = array('data' => array());
 
-		$data = $this->model_Employees->getEmployeeData();
+		$data = $this->model_employees->getEmployeeData();
 		foreach ($data as $key => $value) {
 			// button
 			$buttons = '';
@@ -125,7 +124,7 @@ class Employee extends Admin_Controller
         		// 'active' => $this->input->post('active'),	
         	);
 
-        	$create = $this->model_Employees->create($data);
+        	$create = $this->model_employees->create($data);
         	if($create == true) {
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
@@ -182,7 +181,7 @@ class Employee extends Admin_Controller
 					'designation_id' => $this->input->post('edit_designation_id'),
 	        	);
 
-	        	$update = $this->model_Employees->update($data, $id);
+	        	$update = $this->model_employees->update($data, $id);
 	        	if($update == true) {
 	        		$response['success'] = true;
 	        		$response['messages'] = 'Succesfully updated';
@@ -221,7 +220,7 @@ class Employee extends Admin_Controller
 
 		$response = array();
 		if($Employee_id) {
-			$delete = $this->model_Employees->remove($Employee_id);
+			$delete = $this->model_employees->remove($Employee_id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	
