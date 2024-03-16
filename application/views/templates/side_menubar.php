@@ -86,13 +86,30 @@
             </li>
           <?php endif; ?>
    
-          <?php if(in_array('createPerformance', $user_permission) || in_array('updatePerformance', $user_permission) || in_array('viewPerformance', $user_permission) || in_array('deletePerformance', $user_permission)): ?>
-            <li id="PerformanceNav">
-              <a href="<?php echo base_url('Performance/') ?>">
-                <i class="fa fa-flag"></i> <span>Performance</span>
-              </a>
-            </li>
+          
+   
+          <?php if(in_array('createUser', $user_permission) || in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
           <?php endif; ?>
+            <li class="treeview" id="mainUserNav">
+              <a href="#">
+                <i class="fa fa-flag"></i>
+                <span>Performance</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+
+                <?php if(in_array('createUser', $user_permission)): ?>
+                <li id="createUserNav"><a href="<?php echo base_url('indicators') ?>"><i class="fa fa-circle-o"></i> Indicator</a></li>
+                <?php endif; ?>
+
+                <?php if(in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
+                <li id="manageUserNav"><a href="<?php echo base_url('appraisals') ?>"><i class="fa fa-circle-o"></i> Appraisal</a></li>
+                <?php endif; ?>
+
+              </ul>
+            </li>
 
           <?php if(in_array('createTrainer', $user_permission) || in_array('updateTrainer', $user_permission) || in_array('viewTrainer', $user_permission) || in_array('deleteTrainer', $user_permission)): ?>
             <li id="trainerNav">

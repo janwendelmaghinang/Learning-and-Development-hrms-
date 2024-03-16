@@ -40,14 +40,14 @@ class Training_types extends Admin_Controller
 			// button
 			$buttons = '';
 
-			// if(in_array('viewBrand', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editDepartment('.$value['id'].')" data-toggle="modal" data-target="#editDepartmentModal"><i class="fa fa-pencil"></i></button>';	
-			// }
+			if(in_array('updateTrainingTypes', $this->permission)) {
+				$buttons .= '<button type="button" class="btn btn-default" onclick="editTrainingTypes('.$value['id'].')" data-toggle="modal" data-target="#editTrainingTypesModal"><i class="fa fa-pencil"></i></button>';	
+			}
 			
-			// if(in_array('deleteBrand', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeDepartment('.$value['id'].')" data-toggle="modal" data-target="#removeDepartmentModal"><i class="fa fa-trash"></i></button>
+			if(in_array('deleteTrainingTypes', $this->permission)) {
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeTrainingTypes('.$value['id'].')" data-toggle="modal" data-target="#removeTrainingTypesModal"><i class="fa fa-trash"></i></button>
 				';
-			// }				
+			}				
 
 			$status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
@@ -67,10 +67,10 @@ class Training_types extends Admin_Controller
 	* returns the data into json format. 
 	* This function is invoked from the view page.
 	*/             
-	public function fetchDepartmentDataById($id)
+	public function fetchTrainingTypesDataById($id)
 	{
 		if($id) {
-			$data = $this->model_departments->getDepartmentData($id);
+			$data = $this->model_types->getTrainingTypesData($id);
 			echo json_encode($data);
 		}
 
@@ -109,7 +109,7 @@ class Training_types extends Admin_Controller
         	}
         	else {
         		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the Department information';			
+        		$response['messages'] = 'Error in the database while creating the Training type information';			
         	}
         }
         else {
@@ -130,32 +130,32 @@ class Training_types extends Admin_Controller
 	*/
 	public function update($id)
 	{
-		if(!in_array('updateDepartment', $this->permission)) {
+		if(!in_array('updateTrainingTypes', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = array();
 
 		if($id) {
-			$this->form_validation->set_rules('edit_department_name', 'Department name', 'trim|required');
+			$this->form_validation->set_rules('edit_training_types_name', 'Training type name', 'trim|required');
 			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
-	        		'name' => $this->input->post('edit_department_name'),
+	        		'name' => $this->input->post('edit_training_types_name'),
 	        		'active' => $this->input->post('edit_active'),	
 	        	);
 
-	        	$update = $this->model_departments->update($data, $id);
+	        	$update = $this->model_types->update($data, $id);
 	        	if($update == true) {
 	        		$response['success'] = true;
 	        		$response['messages'] = 'Succesfully updated';
 	        	}
 	        	else {
 	        		$response['success'] = false;
-	        		$response['messages'] = 'Error in the database while updated the department information';			
+	        		$response['messages'] = 'Error in the database while updated the Training type information';			
 	        	}
 	        }
 	        else {
@@ -174,33 +174,33 @@ class Training_types extends Admin_Controller
 	}
 
 	/*
-	* It removes the department information from the database 
+	* It removes the training type information from the database 
 	* and returns the json format operation messages
 	*/
 	public function remove()
 	{
-		if(!in_array('deleteDepartment', $this->permission)) {
+		if(!in_array('deleteTrainingTypes', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 		$response = array();
 		
-		$department_id = $this->input->post('department_id');
-        $check = $this->model_designations->existInDesignation($department_id);
+		$type_id = $this->input->post('type_id');
+        // $check = $this->model_designations->existInDesignation($department_id);
 
-		if($check == true){
-			$response['success'] = false;
-			$response['messages'] = "This Department Exists in Designation!";
-		}else{
-			$delete = $this->model_departments->remove($department_id);
+		// if($check == true){
+		// 	$response['success'] = false;
+		// 	$response['messages'] = "This Department Exists in Designation!";
+		// }else{
+			$delete = $this->model_types->remove($type_id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	
 			}
 			else {
 				$response['success'] = false;
-				$response['messages'] = "Error in the database while removing the department information";
+				$response['messages'] = "Error in the database while removing the Training type information";
 			}
-		}
+		// }
 		echo json_encode($response);
 	}
 

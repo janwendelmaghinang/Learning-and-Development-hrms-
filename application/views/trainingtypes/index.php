@@ -253,7 +253,6 @@ $(document).ready(function() {
 
 
 });
-
 function editTrainingTypes(id)
 { 
   $.ajax({
@@ -262,11 +261,11 @@ function editTrainingTypes(id)
     dataType: 'json',
     success:function(response) {
 
-      $("#edit_department_name").val(response.name);
+      $("#edit_training_types_name").val(response.name);
       $("#edit_active").val(response.active);
 
       // submit the edit from 
-      $("#updateDepartmentForm").unbind('submit').bind('submit', function() {
+      $("#updateTrainingTypesForm").unbind('submit').bind('submit', function() {
         var form = $(this);
 
         // remove the text-danger
@@ -289,9 +288,9 @@ function editTrainingTypes(id)
 
 
               // hide the modal
-              $("#editDepartmentModal").modal('hide');
+              $("#editTrainingTypesModal").modal('hide');
               // reset the form 
-              $("#updateDepartmentForm .form-group").removeClass('has-error').removeClass('has-success');
+              $("#updateTrainingTypesForm .form-group").removeClass('has-error').removeClass('has-success');
 
             } else {
 
@@ -324,11 +323,10 @@ function editTrainingTypes(id)
   });
 }
 
-function removeDepartment(id)
+function removeTrainingTypes(id)
 {
   if(id) {
-    $("#removeDepartmentForm").on('submit', function() {
-
+    $("#removeTrainingTypesForm").on('submit', function() {
       var form = $(this);
 
       // remove the text-danger
@@ -337,7 +335,7 @@ function removeDepartment(id)
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: { department_id:id }, 
+        data: { type_id:id }, 
         dataType: 'json',
         success:function(response) {
 
@@ -350,7 +348,7 @@ function removeDepartment(id)
             '</div>');
 
             // hide the modal
-            $("#removeDepartmentModal").modal('hide');
+            $("#removeTrainingTypesModal").modal('hide');
 
           } else {
 
@@ -360,7 +358,7 @@ function removeDepartment(id)
             '</div>'); 
 
             // hide the modal
-            $("#removeDepartmentModal").modal('hide');
+            $("#removeTrainingTypesModal").modal('hide');
           }
         }
       }); 
