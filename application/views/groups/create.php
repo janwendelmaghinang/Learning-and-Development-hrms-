@@ -34,7 +34,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Add Group</h3>
+              <h3 class="box-title">Add Role</h3>
             </div>
             <form role="form" action="<?php base_url('groups/create') ?>" method="post">
               <div class="box-body">
@@ -42,7 +42,7 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="group_name">Group Name</label>
+                  <label for="group_name">Role Name</label>
                   <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter group name">
                 </div>
                 <div class="form-group">
@@ -93,6 +93,20 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateEmployee" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewEmployee" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteEmployee" class="minimal"></td>
+                      </tr>
+                      <tr>
+                        <td>Indicator</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createIndicator" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateIndicator" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewIndicator" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteIndicator" class="minimal"></td>
+                      </tr>
+                      <tr>
+                        <td>Appraisal</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createAppraisal" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateAppraisal" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewAppraisal" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteAppraisal" class="minimal"></td>
                       </tr>
                       <tr>
                         <td>Training Types</td>

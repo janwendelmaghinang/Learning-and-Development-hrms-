@@ -186,7 +186,7 @@ var manageTable;
 
 $(document).ready(function() {
 
-  $("#TrainingTypesNav").addClass('active');
+  $("#trainingTypesNav").addClass('active');
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({

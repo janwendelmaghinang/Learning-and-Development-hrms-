@@ -152,6 +152,36 @@
                         } ?>></td>
                       </tr>
                       <tr>
+                        <td>Indicator</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createIndicator" <?php if($serialize_permission) {
+                          if(in_array('createIndicator', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateIndicator" <?php if($serialize_permission) {
+                          if(in_array('updateIndicator', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewIndicator" <?php if($serialize_permission) {
+                          if(in_array('viewIndicator', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deleteIndicator" <?php if($serialize_permission) {
+                          if(in_array('deleteIndicator', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                      </tr>
+                      <tr>
+                        <td>Appraisal</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createAppraisal" <?php if($serialize_permission) {
+                          if(in_array('createAppraisal', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateAppraisal" <?php if($serialize_permission) {
+                          if(in_array('updateAppraisal', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewAppraisal" <?php if($serialize_permission) {
+                          if(in_array('viewAppraisal', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deleteAppraisal" <?php if($serialize_permission) {
+                          if(in_array('deleteAppraisal', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                      </tr>
+                      <tr>
                         <td>Training Types</td>
                         <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createTrainingTypes" <?php if($serialize_permission) {
                           if(in_array('createTrainingTypes', $serialize_permission)) { echo "checked"; } 
