@@ -64,6 +64,16 @@ class Model_employees extends CI_Model
 		}
 	}
 
+	public function getEmployeeByDeptAndDesigData($department = null, $designation = null)
+	{
+		if($department && $designation) {
+			$sql = "SELECT * FROM users WHERE department_id = ? AND designation_id = ? AND id != 1";
+			$query = $this->db->query($sql,array($department,$designation));
+			return $query->result_array();
+		}
+
+	}
+
 
 	// check if department is in use in employee
 	// public function existInEmployee($id){

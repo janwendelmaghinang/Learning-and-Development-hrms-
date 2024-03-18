@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Employee extends Admin_Controller 
+class Trainings extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -10,94 +10,77 @@ class Employee extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Employee';
-		$this->load->model('model_employees');
+		$this->data['page_title'] = 'Training';
+		$this->load->model('model_training');
 		$this->load->model('model_departments');
 		$this->load->model('model_designations');
-		$this->load->model('model_groups');
+		$this->load->model('model_employees');
+		$this->load->model('model_types');
 	}
 
 	/* 
-	* It only redirects to the manage Employee page
+	* It only redirects to the manage Training page
 	*/
 	public function index()
 	{
 
-		if(!in_array('viewEmployee', $this->permission)) {
+		if(!in_array('viewTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
-		}
-		$this->data['role'] = $this->model_groups->getRoleByName();
-        $this->data['departments'] = $this->model_departments->getDepartmentData();
-		$this->render_template('employees/index', $this->data);	
+		}  
+		$this->data['types'] = $this->model_types->getTrainingTypesData();
+		$this->data['departments'] = $this->model_departments->getDepartmentData();
+		$this->render_template('training/index', $this->data);	
 	}	
 
 	/*
-	* It checks if it gets the Employee id and retreives
-	* the Employee information from the Employee model and 
+	* It checks if it gets the Training id and retreives
+	* the Training information from the Training model and 
 	* returns the data into json format. 
 	* This function is invoked from the view page.
 	*/
-	public function fetchEmployeeDataById($id) 
+	public function fetchTrainingDataById($id) 
 	{
 		if($id) {
-			$data = $this->model_employees->getEmployeeData($id);
+			$data = $this->model_training->getTrainingData($id);
 			echo json_encode($data);
 		}
 
 		return false;
 	}
-	public function fetchEmployeeByDeptId_DesigId() 
-	{
-		$department = $this->input->post('dept_id');
-		$designation = $this->input->post('desig_id');
-        $response = array();
-		if($department && $designation) {
-			$data = $this->model_employees->getEmployeeByDeptAndDesigData($department,$designation);
-            if($data){
-				$response['success'] = true;
-				$response['results'] = $data;
-			}
-			else{
-				$response['success'] = false;
-				$response['results'] = $data;
-			}
-		
-			echo json_encode($response);
-		}
 
-		return false;
-	}
 	/*
-	* Fetches the Employee value from the Employee table 
+	* Fetches the Training value from the Training table 
 	* this function is called from the datatable ajax function
 	*/          
-	public function fetchEmployeeData()
+	public function fetchTrainingData()
 	{
 		$result = array('data' => array());
 
-		$data = $this->model_employees->getEmployeeData();
+		$data = $this->model_training->getTrainingData();
 		foreach ($data as $key => $value) {
 			// button
 			$buttons = '';
 
-			if(in_array('updateEmployee', $this->permission)) {
+			if(in_array('updateTraining', $this->permission)) {
 				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
 			}
 
-			if(in_array('deleteEmployee', $this->permission)) {
+			if(in_array('deleteTraining', $this->permission)) {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>';
 			}
-			
-			$department = $this->model_departments->getDepartmentData($value['department_id']);
-			$designation = $this->model_designations->getDesignationData($value['designation_id']);
+			$type = $this->model_types->getTrainingTypesData($value['type_id']);
+			$emp = $this->model_employees->getEmployeeData($value['employee_id']);
+			$department = $this->model_departments->getDepartmentData($emp['department_id']);
+			$designation = $this->model_designations->getDesignationData($emp['designation_id']);
 			// $status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
-			$result['data'][$key] = array(
-				'EMP00'.$value['id'],
-				$value['firstname'] .' '. $value['lastname'] ,
+			$result['data'][$key] = array(	
 		        $department['name'],
                 $designation['name'],
-				$value['dateofjoining'],
+				$type['name'],
+				$emp['firstname'] .' '. $emp['lastname'] ,
+				$value['startdate'],
+				$value['enddate'],
 				$buttons
 			);
 		} // /foreach
@@ -106,13 +89,13 @@ class Employee extends Admin_Controller
 	}
 
 	/*
-	* Its checks the Employee form validation 
+	* Its checks the Training form validation 
 	* and if the validation is successfully then it inserts the data into the database 
 	* and returns the json format operation messages
 	*/
 	public function create()
 	{
-		if(!in_array('createEmployee', $this->permission)) {
+		if(!in_array('createTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
@@ -144,14 +127,14 @@ class Employee extends Admin_Controller
         		// 'active' => $this->input->post('active'),	
         	);
 
-        	$create = $this->model_employees->create($data);
+        	$create = $this->model_training->create($data);
         	if($create == true) {
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
         	}
         	else {
         		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the Employee information';			
+        		$response['messages'] = 'Error in the database while creating the Training information';			
         	}
         }
         else {
@@ -165,14 +148,14 @@ class Employee extends Admin_Controller
 	}
 
 	/*
-	* Its checks the Employee form validation 
+	* Its checks the Training form validation 
 	* and if the validation is successfully then it updates the data into the database 
 	* and returns the json format operation messages
 	*/
 	public function update($id)
 	{
 
-		if(!in_array('updateEmployee', $this->permission)) {
+		if(!in_array('updateTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
@@ -201,7 +184,7 @@ class Employee extends Admin_Controller
 					'designation_id' => $this->input->post('edit_designation_id'),
 	        	);
 
-	        	$update = $this->model_employees->update($data, $id);
+	        	$update = $this->model_training->update($data, $id);
 	        	if($update == true) {
 	        		$response['success'] = true;
 	        		$response['messages'] = 'Succesfully updated';
@@ -227,20 +210,20 @@ class Employee extends Admin_Controller
 	}
 
 	/*
-	* It removes the Employee information from the database 
+	* It removes the Training information from the database 
 	* and returns the json format operation messages
 	*/
 	public function remove()
 	{
-		if(!in_array('deleteEmployee', $this->permission)) {
+		if(!in_array('deleteTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 		
-		$Employee_id = $this->input->post('Employee_id');
+		$Training_id = $this->input->post('Training_id');
 
 		$response = array();
-		if($Employee_id) {
-			$delete = $this->model_employees->remove($Employee_id);
+		if($Training_id) {
+			$delete = $this->model_training->remove($Training_id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	

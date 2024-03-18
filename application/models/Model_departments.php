@@ -15,7 +15,7 @@ class Model_departments extends CI_Model
 		return $query->result_array();
 	}
 
-	/* get the brand data */
+	/* get the department data */
 	public function getDepartmentData($id = null)
 	{
 		if($id) {

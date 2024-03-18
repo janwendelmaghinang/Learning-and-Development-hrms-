@@ -111,11 +111,11 @@
           <?php endif; ?>
    
           <?php if(in_array('createTrainer', $user_permission) || in_array('updateTrainer', $user_permission) || in_array('viewTrainer', $user_permission) || in_array('deleteTrainer', $user_permission)): ?>
-            <li id="trainerNav">
+            <!-- <li id="trainerNav">
               <a href="<?php echo base_url('trainer/') ?>">
                 <i class="fa fa-user"></i> <span>Trainer</span>
               </a>
-            </li>
+            </li> -->
           <?php endif; ?>
 
           <?php if(in_array('createTraining', $user_permission) || in_array('updateTraining', $user_permission) || in_array('viewTraining', $user_permission) || in_array('deleteTraining', $user_permission)): ?>
