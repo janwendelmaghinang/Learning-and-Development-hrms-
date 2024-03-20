@@ -16,12 +16,13 @@ class Model_employees extends CI_Model
 	}
 
 	/* get the brand data */
+
 	public function getEmployeeData($id = null)
 	{
 		if($id) {
 			$sql = "SELECT * FROM users WHERE id = ?";
 			$query = $this->db->query($sql, array($id));
-			return $query->result_array();
+			return $query->row_array();
 		}
 
 		$sql = "SELECT * FROM users WHERE id !=1 AND role_id != '' ";

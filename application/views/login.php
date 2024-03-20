@@ -15,7 +15,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/Ionicons/css/ionicons.min.css') ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/AdminLTE.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/dist/css/AdminLTE.css') ?>">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/square/blue.css') ?>">
 
@@ -28,12 +28,16 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
+  <style>
+    .login-logo a{
+      color: white;
+    }
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url('auth'); ?>"><b>Login</b></a>
+    <a class="" href="<?php echo base_url('auth'); ?>"><b>Login</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

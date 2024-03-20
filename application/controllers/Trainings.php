@@ -60,6 +60,10 @@ class Trainings extends Admin_Controller
 		foreach ($data as $key => $value) {
 			// button
 			$buttons = '';
+			
+			if(in_array('updateTraining', $this->permission)) {
+				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-eye"></i></button>';
+			}
 
 			if(in_array('updateTraining', $this->permission)) {
 				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
@@ -72,7 +76,7 @@ class Trainings extends Admin_Controller
 			$emp = $this->model_employees->getEmployeeData($value['employee_id']);
 			$department = $this->model_departments->getDepartmentData($emp['department_id']);
 			$designation = $this->model_designations->getDesignationData($emp['designation_id']);
-			// $status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
+			// $status = ($value['status'] == 'pending') ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
 			$result['data'][$key] = array(	
 		        $department['name'],
@@ -81,6 +85,7 @@ class Trainings extends Admin_Controller
 				$emp['firstname'] .' '. $emp['lastname'] ,
 				$value['startdate'],
 				$value['enddate'],
+				$value['status'],
 				$buttons
 			);
 		} // /foreach
@@ -101,30 +106,23 @@ class Trainings extends Admin_Controller
 
 		$response = array();
 
-		$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
-		$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[5]');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-		$this->form_validation->set_rules('role', 'role', 'trim|required');
 		$this->form_validation->set_rules('designation_id', 'Designation', 'trim|required');
 		$this->form_validation->set_rules('department_id', 'Department', 'trim|required');
-		$this->form_validation->set_rules('active', 'Active', 'trim|required');
+		$this->form_validation->set_rules('type_id', 'Training type', 'trim|required');
+		$this->form_validation->set_rules('employee_id', 'Employee', 'trim|required');
+		$this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
+		$this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
         	$data = array(
-        		'firstname' => $this->input->post('firstname'),
-				'lastname' => $this->input->post('lastname'),
-				'username' => $this->input->post('username'),
-				'email' => $this->input->post('email'),
-				'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
-				'role_id' => $this->input->post('role'),
-				'department_id' => $this->input->post('department_id'),
-				'designation_id' => $this->input->post('designation_id'),
-				'dateofjoining' => date('M d, Y')
-        		// 'active' => $this->input->post('active'),	
+        		// 'designation_id' => $this->input->post('designation_id'),
+				// 'department_id' => $this->input->post('department_id'),	
+				'type_id' => $this->input->post('type_id'),	
+				'employee_id' => $this->input->post('employee_id'),	
+				'startdate' => $this->input->post('start_date'),	
+				'enddate' => $this->input->post('end_date'),	
         	);
 
         	$create = $this->model_training->create($data);

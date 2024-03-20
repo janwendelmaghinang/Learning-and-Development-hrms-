@@ -24,7 +24,7 @@ class Model_training extends CI_Model
 			return $query->result_array();
 		}
 
-		$sql = "SELECT * FROM trainings";
+		$sql = "SELECT * FROM trainings ORDER BY id DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -34,15 +34,15 @@ class Model_training extends CI_Model
 		if($data) {
 			$insert = $this->db->insert('trainings', $data);
 
-			$user_id = $this->db->insert_id();
-			$group_data = array(
-				'user_id' => $user_id,
-				'group_id' => $data['role_id']
-			);
+			// $user_id = $this->db->insert_id();
+			// $group_data = array(
+			// 	'user_id' => $user_id,
+			// 	'group_id' => $data['role_id']
+			// );
 
-			$group_data = $this->db->insert('user_group', $group_data);
+			// $group_data = $this->db->insert('user_group', $group_data);
 
-			return ($insert == true && $group_data) ? true : false;
+			return ($insert == true) ? true : false;
 		}
 	}
 
