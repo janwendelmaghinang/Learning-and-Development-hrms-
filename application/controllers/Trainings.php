@@ -27,7 +27,7 @@ class Trainings extends Admin_Controller
 		}  
 		$this->data['types'] = $this->model_types->getTrainingTypesData();
 		$this->data['departments'] = $this->model_departments->getDepartmentData();
-		$this->render_template('training/index', $this->data);	
+		$this->render_template('trainings/index', $this->data);	
 	}	
 
 	/*
