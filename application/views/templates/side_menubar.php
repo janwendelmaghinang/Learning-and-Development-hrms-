@@ -80,7 +80,7 @@
 
           <?php if(in_array('createIndicator', $user_permission) || in_array('updateIndicator', $user_permission) || in_array('viewIndicator', $user_permission) || in_array('deleteIndicator', $user_permission)): ?>
   
-            <li class="treeview" id="mainUserNav">
+            <li class="treeview" id="mainPerformanceNav">
               <a href="#">
                 <i class="fa fa-flag"></i>
                 <span>Performance</span>
@@ -91,11 +91,11 @@
               <ul class="treeview-menu">
 
               <?php if(in_array('viewIndicator', $user_permission)): ?>
-                <li id="createUserNav"><a href="<?php echo base_url('indicators') ?>"><i class="fa fa-circle-o"></i> Indicator</a></li>
+                <li id="indicatorNav"><a href="<?php echo base_url('indicators') ?>"><i class="fa fa-circle-o"></i> Indicator</a></li>
               <?php endif; ?>
 
               <?php if(in_array('createAppraisal', $user_permission)): ?>
-                <li id="manageUserNav"><a href="<?php echo base_url('appraisals') ?>"><i class="fa fa-circle-o"></i> Appraisal</a></li>
+                <li id="appraisalNav"><a href="<?php echo base_url('appraisals') ?>"><i class="fa fa-circle-o"></i> Appraisal</a></li>
               <?php endif; ?>
 
               </ul>

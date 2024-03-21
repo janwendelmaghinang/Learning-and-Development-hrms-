@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Departments extends Admin_Controller 
+class Indicators extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -10,53 +10,61 @@ class Departments extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Departments';
+		$this->data['page_title'] = 'Indicators';
 
-		$this->load->model('model_departments');
+		$this->load->model('model_indicators');
 		$this->load->model('model_designations');
+        $this->load->model('model_departments');
 	}
 
 
 	public function index()
 	{
-		if(!in_array('viewDepartment', $this->permission)) {
-			redirect('dashboard', 'refresh');
-		}
+		// if(!in_array('viewBrand', $this->permission)) {
+		// 	redirect('dashboard', 'refresh');
+		// }
 
 		$result = $this->model_departments->getDepartmentData();
 
-		$this->data['results'] = $result;
+		$this->data['departments'] = $result;
 
-		$this->render_template('department/index', $this->data);
+		$this->render_template('indicators/index', $this->data);
 	}
 
 	/*
-	* Fetches the Department data from the Department table 
+	* Fetches the brand data from the brand table 
 	* this function is called from the datatable ajax function
 	*/       
-	public function fetchDepartmentData()
+	public function fetchIndicatorData()
 	{
 		$result = array('data' => array());
 
-		$data = $this->model_departments->getDepartmentData();
+		$data = $this->model_indicators->getIndicatorData();
 		foreach ($data as $key => $value) {
 
 			// button
 			$buttons = '';
 
-			if(in_array('viewDepartment', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editDepartment('.$value['id'].')" data-toggle="modal" data-target="#editDepartmentModal"><i class="fa fa-pencil"></i></button>';	
+			if(in_array('updateIndicator', $this->permission)) {
+				$buttons .= '<button type="button" class="btn btn-default" onclick="editIndicator('.$value['id'].')" data-toggle="modal" data-target="#editIndicatorModal"><i class="fa fa-pencil"></i></button>';	
 			}
 			
-			if(in_array('deleteDepartment', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeDepartment('.$value['id'].')" data-toggle="modal" data-target="#removeDepartmentModal"><i class="fa fa-trash"></i></button>
+			if(in_array('deleteIndicator', $this->permission)) {
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeIndicator('.$value['id'].')" data-toggle="modal" data-target="#removeIndicatorModal"><i class="fa fa-trash"></i></button>
 				';
-			}				
+			}	
+            
+            $department = $this->model_departments->getDepartmentData($value['department_id']);
+            $designation = $this->model_designations->getDesignationData($value['designation_id']);
 
 			$status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
 			$result['data'][$key] = array(
-				$value['name'],
+                
+				$department['name'],
+                $designation['name'],
+                '-',
+                '-',
 				$status,
 				$buttons
 			);
@@ -66,15 +74,15 @@ class Departments extends Admin_Controller
 	}
 
 	/*
-	* It checks if it gets the Department id and retreives
-	* the Department information from the Department model and 
+	* It checks if it gets the brand id and retreives
+	* the brand information from the brand model and 
 	* returns the data into json format. 
 	* This function is invoked from the view page.
 	*/             
-	public function fetchDepartmentDataById($id)
+	public function fetchIndicatorDataById($id)
 	{
 		if($id) {
-			$data = $this->model_departments->getDepartmentData($id);
+			$data = $this->model_indicators->getIndicatorData($id);
 			echo json_encode($data);
 		}
 
@@ -82,38 +90,38 @@ class Departments extends Admin_Controller
 	}
 
 	/*
-	* Its checks the Department form validation 
+	* Its checks the brand form validation 
 	* and if the validation is successfully then it inserts the data into the database 
 	* and returns the json format operation messages
 	*/
 	public function create()
 	{
 
-		if(!in_array('createDepartment', $this->permission)) {
+		if(!in_array('createIndicator', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = array();
 
-		$this->form_validation->set_rules('department_name', 'Department name', 'trim|required');
+		$this->form_validation->set_rules('Indicator_name', 'Indicator name', 'trim|required');
 		$this->form_validation->set_rules('active', 'Active', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
         	$data = array(
-        		'name' => $this->input->post('department_name'),
+        		'name' => $this->input->post('Indicator_name'),
         		'active' => $this->input->post('active'),	
         	);
 
-        	$create = $this->model_departments->create($data);
+        	$create = $this->model_indicators->create($data);
         	if($create == true) {
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
         	}
         	else {
         		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the Department information';			
+        		$response['messages'] = 'Error in the database while creating the Indicator information';			
         	}
         }
         else {
@@ -128,38 +136,38 @@ class Departments extends Admin_Controller
 	}
 
 	/*
-	* Its checks the Department form validation 
+	* Its checks the brand form validation 
 	* and if the validation is successfully then it updates the data into the database 
 	* and returns the json format operation messages
 	*/
 	public function update($id)
 	{
-		if(!in_array('updateDepartment', $this->permission)) {
+		if(!in_array('updateIndicator', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = array();
 
 		if($id) {
-			$this->form_validation->set_rules('edit_department_name', 'Department name', 'trim|required');
+			$this->form_validation->set_rules('edit_Indicator_name', 'Indicator name', 'trim|required');
 			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
-	        		'name' => $this->input->post('edit_department_name'),
+	        		'name' => $this->input->post('edit_Indicator_name'),
 	        		'active' => $this->input->post('edit_active'),	
 	        	);
 
-	        	$update = $this->model_departments->update($data, $id);
+	        	$update = $this->model_indicators->update($data, $id);
 	        	if($update == true) {
 	        		$response['success'] = true;
 	        		$response['messages'] = 'Succesfully updated';
 	        	}
 	        	else {
 	        		$response['success'] = false;
-	        		$response['messages'] = 'Error in the database while updated the department information';			
+	        		$response['messages'] = 'Error in the database while updated the Indicator information';			
 	        	}
 	        }
 	        else {
@@ -178,31 +186,31 @@ class Departments extends Admin_Controller
 	}
 
 	/*
-	* It removes the department information from the database 
+	* It removes the Indicator information from the database 
 	* and returns the json format operation messages
 	*/
 	public function remove()
 	{
-		if(!in_array('deleteDepartment', $this->permission)) {
+		if(!in_array('deleteIndicator', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 		$response = array();
 		
-		$department_id = $this->input->post('department_id');
-        $check = $this->model_designations->existInDesignation($department_id);
+		$Indicator_id = $this->input->post('Indicator_id');
+        $check = $this->model_designations->existInDesignation($Indicator_id);
 
 		if($check == true){
 			$response['success'] = false;
-			$response['messages'] = "This Department Exists in Designation!";
+			$response['messages'] = "This Indicator Exists in Designation!";
 		}else{
-			$delete = $this->model_departments->remove($department_id);
+			$delete = $this->model_indicators->remove($Indicator_id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	
 			}
 			else {
 				$response['success'] = false;
-				$response['messages'] = "Error in the database while removing the department information";
+				$response['messages'] = "Error in the database while removing the Indicator information";
 			}
 		}
 		echo json_encode($response);

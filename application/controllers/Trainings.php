@@ -40,11 +40,11 @@ class Trainings extends Admin_Controller
 	{
 		if($id) {
 			$data = $this->model_training->getTrainingData($id);
-			$emp = $this->model_employees->getEmployeeData($data['employee_id']);
-			$data['employee'] = $emp; 
-			$data['department'] = $this->model_departments->getDepartmentData($emp['department_id']);
-			$data['designation'] = $this->model_designations->getDesignationData($emp['designation_id']);
-			$data['type'] = $this->model_types->getTrainingTypesData($data['type_id']);
+			// $emp = $this->model_employees->getEmployeeData($data['employee_id']);
+			// $data['employee'] = $emp; 
+			// $data['department'] = $this->model_departments->getDepartmentData($emp['department_id']);
+			// $data['designation'] = $this->model_designations->getDesignationData($emp['designation_id']);
+			// $data['type'] = $this->model_types->getTrainingTypesData($data['type_id']);
 			echo json_encode($data);
 		}
 
@@ -122,10 +122,12 @@ class Trainings extends Admin_Controller
         	$data = array(
         		// 'designation_id' => $this->input->post('designation_id'),
 				// 'department_id' => $this->input->post('department_id'),	
+				'description' => $this->input->post('desc'),
 				'type_id' => $this->input->post('type_id'),	
 				'employee_id' => $this->input->post('employee_id'),	
 				'startdate' => $this->input->post('start_date'),	
-				'enddate' => $this->input->post('end_date'),	
+				'enddate' => $this->input->post('end_date'),
+				'status' => 'pending'	
         	);
 
         	$create = $this->model_training->create($data);
@@ -155,34 +157,23 @@ class Trainings extends Admin_Controller
 	*/
 	public function update($id)
 	{
-
 		if(!in_array('updateTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
+		$this->form_validation->set_rules('edit_type_id', 'Training type', 'trim|required');
+		$this->form_validation->set_rules('edit_start_date', 'Start Date', 'trim|required');
+		$this->form_validation->set_rules('edit_end_date', 'End Date', 'trim|required');
 
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 		$response = array();
-
 		if($id) {
-			$this->form_validation->set_rules('edit_firstname', 'Firstname', 'trim|required');
-			$this->form_validation->set_rules('edit_lastname', 'Lastname', 'trim|required');
-			$this->form_validation->set_rules('edit_username', 'Username', 'trim|required|min_length[5]|max_length[12]');
-			$this->form_validation->set_rules('edit_email', 'Email', 'trim|required|min_length[5]');
-			$this->form_validation->set_rules('edit_password', 'Password', 'trim|required|min_length[8]');
-			$this->form_validation->set_rules('edit_designation_id', 'Designation', 'trim|required');
-			$this->form_validation->set_rules('edit_department_id', 'Department', 'trim|required');
-			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
-
-			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {
 	        	$data = array(
-	        		'firstname' => $this->input->post('edit_firstname'),
-					'lastname' => $this->input->post('edit_lastname'),
-					'username' => $this->input->post('edit_username'),
-					'email' => $this->input->post('edit_email'),
-					'password' => $this->input->post('edit_password'),
-					'department_id' => $this->input->post('edit_department_id'),
-					'designation_id' => $this->input->post('edit_designation_id'),
+				'description' => $this->input->post('edit_desc'),
+				'type_id' => $this->input->post('edit_type_id'),	
+				'startdate' => $this->input->post('edit_start_date'),	
+				'enddate' => $this->input->post('edit_end_date'),
 	        	);
 
 	        	$update = $this->model_training->update($data, $id);
@@ -192,7 +183,7 @@ class Trainings extends Admin_Controller
 	        	}
 	        	else {
 	        		$response['success'] = false;
-	        		$response['messages'] = 'Error in the database while updated the brand information';			
+	        		$response['messages'] = 'Error in the database while updated the training information';			
 	        	}
 	        }
 	        else {
@@ -220,18 +211,18 @@ class Trainings extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 		
-		$Training_id = $this->input->post('Training_id');
+		$id = $this->input->post('training_id');
 
 		$response = array();
-		if($Training_id) {
-			$delete = $this->model_training->remove($Training_id);
+		if($id) {
+			$delete = $this->model_training->remove($id);
 			if($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";	
 			}
 			else {
 				$response['success'] = false;
-				$response['messages'] = "Error in the database while removing the brand information";
+				$response['messages'] = "Error in the database while removing the training information";
 			}
 		}
 		else {
