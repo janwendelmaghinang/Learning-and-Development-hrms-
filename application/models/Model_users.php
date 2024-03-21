@@ -79,7 +79,14 @@ class Model_users extends CI_Model
 
 	public function countTotalUsers()
 	{
-		$sql = "SELECT * FROM users";
+		$sql = "SELECT * FROM users WHERE id != 1 AND role_id = ''";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
+	}
+
+	public function countTotalEmployee()
+	{
+		$sql = "SELECT * FROM users WHERE id != 1 AND role_id != ''";
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}

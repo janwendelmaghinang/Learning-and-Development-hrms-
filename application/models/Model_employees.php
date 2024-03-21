@@ -74,8 +74,6 @@ class Model_employees extends CI_Model
 		}
 
 	}
-
-
 	// check if department is in use in employee
 	// public function existInEmployee($id){
 	// 	if($id) {

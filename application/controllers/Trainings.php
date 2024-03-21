@@ -7,9 +7,7 @@ class Trainings extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->not_logged_in();
-
 		$this->data['page_title'] = 'Training';
 		$this->load->model('model_training');
 		$this->load->model('model_departments');
@@ -42,6 +40,11 @@ class Trainings extends Admin_Controller
 	{
 		if($id) {
 			$data = $this->model_training->getTrainingData($id);
+			$emp = $this->model_employees->getEmployeeData($data['employee_id']);
+			$data['employee'] = $emp; 
+			$data['department'] = $this->model_departments->getDepartmentData($emp['department_id']);
+			$data['designation'] = $this->model_designations->getDesignationData($emp['designation_id']);
+			$data['type'] = $this->model_types->getTrainingTypesData($data['type_id']);
 			echo json_encode($data);
 		}
 
@@ -61,9 +64,9 @@ class Trainings extends Admin_Controller
 			// button
 			$buttons = '';
 			
-			if(in_array('updateTraining', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-eye"></i></button>';
-			}
+			// if(in_array('updateTraining', $this->permission)) {
+			// 	$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-eye"></i></button>';
+			// }
 
 			if(in_array('updateTraining', $this->permission)) {
 				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';

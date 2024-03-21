@@ -192,6 +192,13 @@
           </div>
           
           <div class="form-group">
+            <div class="alert alert-info alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Leave the password field empty if you don't want to change.
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="edit_password">Password</label>
             <input type="password" class="form-control" id="edit_password" name="edit_password" placeholder="Enter Password" autocomplete="off">
           </div>
@@ -341,11 +348,11 @@ function edit(id)
     dataType: 'json',
     success:function(response) {
       
-      $("#edit_firstname").val(response[0].firstname);
-      $("#edit_lastname").val(response[0].lastname);
-      $("#edit_email").val(response[0].email);
-      $("#edit_username").val(response[0].username);
-      $("#edit_department_id").val(response[0].department_id);
+      $("#edit_firstname").val(response.firstname);
+      $("#edit_lastname").val(response.lastname);
+      $("#edit_email").val(response.email);
+      $("#edit_username").val(response.username);
+      $("#edit_department_id").val(response.department_id);
      
       // call the function
       getDesignation();

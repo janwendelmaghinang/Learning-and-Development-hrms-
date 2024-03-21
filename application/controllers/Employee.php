@@ -183,33 +183,57 @@ class Employee extends Admin_Controller
 			$this->form_validation->set_rules('edit_lastname', 'Lastname', 'trim|required');
 			$this->form_validation->set_rules('edit_username', 'Username', 'trim|required|min_length[5]|max_length[12]');
 			$this->form_validation->set_rules('edit_email', 'Email', 'trim|required|min_length[5]');
-			$this->form_validation->set_rules('edit_password', 'Password', 'trim|required|min_length[8]');
+            if(!empty($this->input->post('edit_password'))){
+				$this->form_validation->set_rules('edit_password', 'Password', 'trim|required|min_length[8]');
+			}
 			$this->form_validation->set_rules('edit_designation_id', 'Designation', 'trim|required');
 			$this->form_validation->set_rules('edit_department_id', 'Department', 'trim|required');
 			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
-	        if ($this->form_validation->run() == TRUE) {
-	        	$data = array(
-	        		'firstname' => $this->input->post('edit_firstname'),
-					'lastname' => $this->input->post('edit_lastname'),
-					'username' => $this->input->post('edit_username'),
-					'email' => $this->input->post('edit_email'),
-					'password' => $this->input->post('edit_password'),
-					'department_id' => $this->input->post('edit_department_id'),
-					'designation_id' => $this->input->post('edit_designation_id'),
-	        	);
+	        if ($this->form_validation->run() == TRUE) {	
+				if(empty($this->input->post('edit_password'))){
+					$data = array(
+						'firstname' => $this->input->post('edit_firstname'),
+						'lastname' => $this->input->post('edit_lastname'),
+						'username' => $this->input->post('edit_username'),
+						'email' => $this->input->post('edit_email'),
+						'department_id' => $this->input->post('edit_department_id'),
+						'designation_id' => $this->input->post('edit_designation_id'),
+					);
 
-	        	$update = $this->model_employees->update($data, $id);
-	        	if($update == true) {
-	        		$response['success'] = true;
-	        		$response['messages'] = 'Succesfully updated';
-	        	}
-	        	else {
-	        		$response['success'] = false;
-	        		$response['messages'] = 'Error in the database while updated the brand information';			
-	        	}
+					$update = $this->model_employees->update($data, $id);
+					if($update == true) {
+						$response['success'] = true;
+						$response['messages'] = 'Succesfully updated';
+					}
+					else {
+						$response['success'] = false;
+						$response['messages'] = 'Error in the database while updated the brand information';			
+					}
+				} 
+				else{
+					$data = array(
+						'firstname' => $this->input->post('edit_firstname'),
+						'lastname' => $this->input->post('edit_lastname'),
+						'username' => $this->input->post('edit_username'),
+						'password' => password_hash($this->input->post('edit_password'),PASSWORD_DEFAULT),
+						'email' => $this->input->post('edit_email'),
+						'department_id' => $this->input->post('edit_department_id'),
+						'designation_id' => $this->input->post('edit_designation_id'),
+					);
+
+					$update = $this->model_employees->update($data, $id);
+					if($update == true) {
+						$response['success'] = true;
+						$response['messages'] = 'Succesfully updated';
+					}
+					else {
+						$response['success'] = false;
+						$response['messages'] = 'Error in the database while updated the brand information';			
+					}
+				}
 	        }
 	        else {
 	        	$response['success'] = false;

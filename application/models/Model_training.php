@@ -21,7 +21,7 @@ class Model_training extends CI_Model
 		if($id) {
 			$sql = "SELECT * FROM trainings WHERE id = ?";
 			$query = $this->db->query($sql, array($id));
-			return $query->result_array();
+			return $query->row_array();
 		}
 
 		$sql = "SELECT * FROM trainings ORDER BY id DESC";
