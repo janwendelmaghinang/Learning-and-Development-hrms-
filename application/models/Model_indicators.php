@@ -15,6 +15,12 @@ class Model_indicators extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getKeyIndicatorData(){
+		$sql = "SELECT * FROM key_indicators";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	/* get the Indicator data */
 	public function getIndicatorData($id = null)
 	{
@@ -54,5 +60,41 @@ class Model_indicators extends CI_Model
 			return ($delete == true) ? true : false;
 		}
 	}
+
+	public function calculateIndicator($id = null)
+	{
+		$result = array();
+		$indicators = array(
+			"none" => 1,
+			"poor" => 2,
+			"average" => 3,
+			"satisfactory" => 4,
+			"excellent" => 5
+		);
+		$total = 0;
+		$ind = '';
+		if($id){
+			$value = $this->model_indicators->getIndicatorData($id);
+
+			// commpute
+			$total += intval($value['sales']);
+			$total += intval($value['integrity']);
+			$total += intval($value['leadership']);
+			$total += intval($value['enthusiasm']);
+			$total += intval($value['teamwork']);
+
+			$t = ($total/5);
+			foreach ($indicators as $indicator => $score) {
+			if ($t >= $score || $t == $score) {
+				$ind = $indicator;
+			}
+			}
+			$result['rating'] = $t;
+ 			$result['indicator'] = $ind;
+			return $result;
+		}
+
+	}
+
 
 }

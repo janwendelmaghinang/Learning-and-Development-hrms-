@@ -39,6 +39,14 @@
           <br /> <br />
         <?php endif; ?>
 
+        <select class="form-control input-sm"id="managesFilter" style="width: 200px;">
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="started">Started</option>
+          <option value="completed">Completed</option>
+          <option value="terminated">Terminated</option>
+        </select>
+
         <div class="box">
           <div class="box-header">
             <!-- <h3 class="box-title">Manage Training</h3> -->
@@ -259,6 +267,35 @@ $(document).ready(function() {
     'ajax': '<?php echo base_url('trainings/fetchTrainingData') ?>',
     'order': []
   });
+  
+  $("#manageTable_filter.dataTables_filter").append('<label>Filter :</label>',$("#managesFilter")); //add filter using append
+  
+  var statusIndex = 0;
+$("#manageTable th").each(function (i) {
+  if ($($(this)).html() == "Status") {
+    statusIndex = i; return false;
+  }
+});
+
+//Use the built in datatables API to filter the existing rows by the Category column
+$.fn.dataTable.ext.search.push(
+  function (settings, data, dataIndex) {
+    var selectedItem = $('#managesFilter').val()
+    var category = data[statusIndex];
+    if (selectedItem === "" || category.includes(selectedItem)) {
+      return true;
+    }
+    return false;
+  }
+);
+
+//Set the change event for the Category Filter dropdown to redraw the datatable each time
+//a user selects a new filter.
+$("#managesFilter").change(function (e) {
+  manageTable.draw();
+});
+manageTable.draw();
+
 
   // submit the create from 
   $("#createForm").unbind('submit').on('submit', function() {
