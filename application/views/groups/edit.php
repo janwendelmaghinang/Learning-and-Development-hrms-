@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Role</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo base_url('groups/') ?>">Groups</a></li>
+        <li><a href="<?php echo base_url('groups/') ?>">Role</a></li>
         <li class="active">Edit</li>
       </ol>
     </section>
@@ -35,7 +35,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Edit Group</h3>
+              <h3 class="box-title">Edit Role</h3>
             </div>
             <form role="form" action="<?php base_url('groups/update') ?>" method="post">
               <div class="box-body">
@@ -43,8 +43,8 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="group_name">Group Name</label>
-                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter group name" value="<?php echo $group_data['group_name']; ?>">
+                  <label for="group_name">Role Name</label>
+                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter role name" value="<?php echo $group_data['group_name']; ?>">
                 </div>
                 <div class="form-group">
                   <label for="permission">Permission</label>
@@ -84,7 +84,7 @@
                          ?>></td>
                       </tr>
                       <tr>
-                        <td>Groups</td>
+                        <td>Roles</td>
                         <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createGroup" <?php 
                         if($serialize_permission) {
                           if(in_array('createGroup', $serialize_permission)) { echo "checked"; }  

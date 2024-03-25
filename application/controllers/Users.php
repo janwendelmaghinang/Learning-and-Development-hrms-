@@ -76,7 +76,7 @@ class Users extends Admin_Controller
         }
         else {
             // false case
-        	$group_data = $this->model_groups->getGroupData();
+        	$group_data = $this->model_groups->getGroupDataForCreate();
         	$this->data['group_data'] = $group_data;
 
             $this->render_template('users/create', $this->data);

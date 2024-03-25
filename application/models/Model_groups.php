@@ -20,6 +20,14 @@ class Model_groups extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getGroupDataForCreate() 
+	{
+		$sql = "SELECT * FROM groups WHERE id != ? AND group_name != 'employee' AND group_name != 'employees'";
+		$query = $this->db->query($sql, array(1));
+		return $query->result_array();
+	}
+
+
 	public function create($data = '')
 	{
 		$create = $this->db->insert('groups', $data);

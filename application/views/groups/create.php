@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Role</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">groups</li>
+        <li class="active">role</li>
       </ol>
     </section>
 
@@ -43,7 +43,7 @@
 
                 <div class="form-group">
                   <label for="group_name">Role Name</label>
-                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter group name">
+                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter role name">
                 </div>
                 <div class="form-group">
                   <label for="permission">Permission</label>
@@ -67,7 +67,7 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteUser" class="minimal"></td>
                       </tr>
                       <tr>
-                        <td>Groups</td>
+                        <td>Role</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createGroup" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateGroup" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewGroup" class="minimal"></td>
