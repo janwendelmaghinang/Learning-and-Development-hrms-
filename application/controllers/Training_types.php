@@ -13,6 +13,7 @@ class Training_types extends Admin_Controller
 		$this->data['page_title'] = 'Training_types';
 
 		$this->load->model('model_types');
+		$this->load->model('model_training');
 		$this->load->model('model_designations');
 	}
 
@@ -183,14 +184,15 @@ class Training_types extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 		$response = array();
+		$d_type = 'ttype';
 		
 		$type_id = $this->input->post('type_id');
-        // $check = $this->model_designations->existInDesignation($department_id);
+        $check = $this->model_training->existInTraining($type_id,$d_type);
 
-		// if($check == true){
-		// 	$response['success'] = false;
-		// 	$response['messages'] = "This Department Exists in Designation!";
-		// }else{
+		if($check == true){
+			$response['success'] = false;
+			$response['messages'] = "This Training Type Exists in Training!";
+		}else{
 			$delete = $this->model_types->remove($type_id);
 			if($delete == true) {
 				$response['success'] = true;
@@ -200,7 +202,7 @@ class Training_types extends Admin_Controller
 				$response['success'] = false;
 				$response['messages'] = "Error in the database while removing the Training type information";
 			}
-		// }
+		}
 		echo json_encode($response);
 	}
 

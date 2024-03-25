@@ -75,12 +75,12 @@ class Model_employees extends CI_Model
 
 	}
 	// check if department is in use in employee
-	// public function existInEmployee($id){
-	// 	if($id) {
-	// 		$sql = "SELECT * FROM employee WHERE department_id = ?";
-	// 		$query = $this->db->query($sql, array($id));
-	// 		return ($query->num_rows()) ? true : false;
-	// 	}
-	// }
+	public function existInEmployee($id,$d_type){
+		if($id && $d_type == 'designation') {
+			$sql = "SELECT * FROM users WHERE designation_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return ($query->num_rows()) ? true : false;
+		}
+	}
 
 }

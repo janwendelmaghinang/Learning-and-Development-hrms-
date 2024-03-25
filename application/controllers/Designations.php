@@ -11,7 +11,7 @@ class Designations extends Admin_Controller
 		$this->not_logged_in();
 
 		$this->data['page_title'] = 'Designation';
-
+		$this->load->model('model_employees');
 		$this->load->model('model_designations');
 		$this->load->model('model_departments');
 	}
@@ -201,10 +201,16 @@ class Designations extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 		
-		$Designation_id = $this->input->post('Designation_id');
-
 		$response = array();
-		if($Designation_id) {
+		$Designation_id = $this->input->post('Designation_id');
+		$d_type = 'designation';
+
+        $check = $this->model_employees->existInEmployee($Designation_id,$d_type);
+		if($check == true){
+			$response['success'] = false;
+			$response['messages'] = "This Designation is in use!";
+		}else{
+
 			$delete = $this->model_designations->remove($Designation_id);
 			if($delete == true) {
 				$response['success'] = true;
@@ -212,14 +218,10 @@ class Designations extends Admin_Controller
 			}
 			else {
 				$response['success'] = false;
-				$response['messages'] = "Error in the database while removing the brand information";
+				$response['messages'] = "Error in the database while removing the designation information";
 			}
 		}
-		else {
-			$response['success'] = false;
-			$response['messages'] = "Refersh the page again!!";
-		}
-
+		
 		echo json_encode($response);
 	}
 

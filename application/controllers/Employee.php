@@ -12,6 +12,7 @@ class Employee extends Admin_Controller
 
 		$this->data['page_title'] = 'Employee';
 		$this->load->model('model_employees');
+		$this->load->model('model_training');
 		$this->load->model('model_departments');
 		$this->load->model('model_designations');
 		$this->load->model('model_groups');
@@ -259,11 +260,16 @@ class Employee extends Admin_Controller
 		if(!in_array('deleteEmployee', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
+		$response = array();
+		$d_type = 'employee';
 		
 		$Employee_id = $this->input->post('Employee_id');
 
-		$response = array();
-		if($Employee_id) {
+		$check = $this->model_training->existInTraining($Employee_id,$d_type);
+		if($check == true){
+			$response['success'] = false;
+			$response['messages'] = "This Employee Exists in Training!";
+		}else{
 			$delete = $this->model_employees->remove($Employee_id);
 			if($delete == true) {
 				$response['success'] = true;
@@ -274,11 +280,6 @@ class Employee extends Admin_Controller
 				$response['messages'] = "Error in the database while removing the brand information";
 			}
 		}
-		else {
-			$response['success'] = false;
-			$response['messages'] = "Refersh the page again!!";
-		}
-
 		echo json_encode($response);
 	}
 
