@@ -117,11 +117,59 @@
               </a>
             </li> -->
           <?php endif; ?>
+     
+          <!-- <?php if(in_array('createCourse', $user_permission) || in_array('updateCourse', $user_permission) || in_array('viewCourse', $user_permission) || in_array('deleteCourse', $user_permission)): ?>
+            <li id="courseNav">
+              <a href="<?php echo base_url('courses/') ?>">
+                <i class="fa fa-files-o"></i> <span>Courses</span>
+              </a>
+            </li>
+          <?php endif; ?> -->
+
+          <!-- <?php if(in_array('createMaterial', $user_permission) || in_array('updateMaterial', $user_permission) || in_array('viewMaterial', $user_permission) || in_array('deleteMaterial', $user_permission)): ?>
+            <li id="materialNav">
+              <a href="<?php echo base_url('materials/') ?>">
+                <i class="fa fa-files-o"></i> <span>Training Materials</span>
+              </a>
+            </li>
+          <?php endif; ?> -->
+
+          <!-- <?php if(in_array('createAssessment', $user_permission) || in_array('updateAssessment', $user_permission) || in_array('viewAssessment', $user_permission) || in_array('deleteAssessment', $user_permission)): ?>
+            <li id="assessmentNav">
+              <a href="<?php echo base_url('assessments/') ?>">
+                <i class="fa fa-files-o"></i> <span>Assessments</span>
+              </a>
+            </li>
+          <?php endif; ?> -->
+
+          <?php if(in_array('viewCourse', $user_permission) || in_array('viewMaterial', $user_permission) || in_array('viewAssessment', $user_permission)): ?>
+              <li class="treeview" id="mainCourseNav">
+                <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Training Courses</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <?php if(in_array('viewCourse', $user_permission)): ?>
+                    <li id="courseNav"><a href="<?php echo base_url('courses') ?>"><i class="fa fa-circle-o"></i>Courses</a></li>
+                  <?php endif; ?>
+                  <?php if(in_array('viewMaterial', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
+                  <li id="materialNav"><a href="<?php echo base_url('materials') ?>""><i class="fa fa-circle-o"></i>Training Materials</a></li>
+                  <?php endif; ?>
+                  <?php if(in_array('viewMaterial', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
+                  <li id="assessmentNav"><a href="<?php echo base_url('assessments') ?>""><i class="fa fa-circle-o"></i>Assessments</a></li>
+                  <?php endif; ?>
+                </ul>
+              </li>
+            <?php endif; ?>
+
 
           <?php if(in_array('createTraining', $user_permission) || in_array('updateTraining', $user_permission) || in_array('viewTraining', $user_permission) || in_array('deleteTraining', $user_permission)): ?>
             <li id="trainingNav">
               <a href="<?php echo base_url('trainings/') ?>">
-                <i class="fa fa-files-o"></i> <span>Training</span>
+                <i class="fa fa-files-o"></i> <span>Training List</span>
               </a>
             </li>
           <?php endif; ?>
@@ -137,7 +185,7 @@
           <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
             <li id="designationNav">
               <a href="<?php echo base_url('designations/') ?>">
-                <i class="fa fa-folder"></i> <span>Module</span>
+                <i class="fa fa-folder"></i> <span>Reports</span>
               </a>
             </li>
           <?php endif; ?>

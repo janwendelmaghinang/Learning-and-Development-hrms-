@@ -116,6 +116,27 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteTrainingTypes" class="minimal"></td>
                       </tr>
                       <tr>
+                        <td>Course</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createCourse" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateCourse" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewCourse" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteCourse" class="minimal"></td>
+                      </tr>
+                      <tr>
+                        <td>Material</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createMaterial" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateMaterial" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewMaterial" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteMaterial" class="minimal"></td>
+                      </tr>
+                      <tr>
+                        <td>Assessment</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createAssessment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateAssessment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewAssessment" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteAssessment" class="minimal"></td>
+                      </tr>
+                      <tr>
                         <td>Training</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createTraining" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateTraining" class="minimal"></td>

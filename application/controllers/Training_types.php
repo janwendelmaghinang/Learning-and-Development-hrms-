@@ -20,9 +20,9 @@ class Training_types extends Admin_Controller
 
 	public function index()
 	{
-		// if(!in_array('viewBrand', $this->permission)) {
-		// 	redirect('dashboard', 'refresh');
-		// }
+		if(!in_array('viewTrainingTypes', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
 
 		$this->render_template('trainingtypes/index', $this->data);
 	}

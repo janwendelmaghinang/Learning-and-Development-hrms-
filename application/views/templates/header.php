@@ -31,20 +31,13 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="<?php echo base_url('assets/bower_components/select2/dist/css/select2.min.css') ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/fileinput/fileinput.min.css') ?>">
-
   <!-- icheck -->
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/iCheck/all.css') ?>">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- jQuery 3 -->
   <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
@@ -86,18 +79,13 @@
   <!-- AdminLTE for demo purposes -->
   <script src="<?php echo base_url('assets/dist/js/demo.js') ?>"></script>
   <script src="<?php echo base_url('assets/plugins/fileinput/fileinput.min.js') ?>"></script>
-
   <!-- ChartJS -->
   <script src="<?php echo base_url('assets/bower_components/Chart.js/Chart.js') ?>"></script>
-
   <!-- icheck -->
   <script src="<?php echo base_url('assets/plugins/iCheck/icheck.min.js') ?>"></script>
-
   <!-- DataTables -->
-<script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
-
-
+  <script src="<?php echo base_url('assets/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>"></script>
+  <script src="<?php echo base_url('assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

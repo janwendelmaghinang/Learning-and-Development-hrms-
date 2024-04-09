@@ -4,13 +4,14 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
+    <a href="<?php echo base_url('assessments') ?>" class="btn btn-warning">Back</a>
     <h1>
       Manage
-      <small>Stores</small>
+      <small>Questions</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Stores</li>
+      <li class="active">questions</li>
     </ol>
   </section>
 
@@ -34,28 +35,53 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createStore', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Store</button>
-          <br /> <br />
-        <?php endif; ?>
+        <div class="box">
+
+          <div class="box-header">
+            <h3 class="box-title">Exam Information</h3>
+          </div>
+
+          <div class="box-body">
+            <div class="container">
+            
+            <div class="row">
+                <div class="col">
+                    <p class="text-uppercase">course: <span class="ml-4 text-bold "><?php echo $course['name'] ?></span></p>
+                    <p class="text-uppercase">passing grade: <span class="ml-4 text-bold "><?php echo $assessment['passing_grade'] ?></span></p>
+                    <p class="text-uppercase">max attempt: <span class="ml-4 text-bold "><?php echo $assessment['max_attempt'] ?></span></p>
+                    <p class="text-uppercase">exam duration: <span class="ml-4 text-bold "><?php echo $assessment['assessment_duration'] ?></span></p>
+                </div>
+            </div>
+            </div>
+          </div>
+
+        </div>
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Manage Stores</h3>
+            <h3 class="box-title">List of Question</h3>
           </div>
+
           <!-- /.box-header -->
           <div class="box-body">
+          <?php if(in_array('createAssessment', $user_permission)): ?>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Question</button>
+          <br /> <br />
+        <?php endif; ?>
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Store Name</th>
-                <th>Status</th>
-                <?php if(in_array('updateStore', $user_permission) || in_array('deleteStore', $user_permission)): ?>
+                <th>Question</th>
+                <th>Choice A</th>
+                <th>Choice B</th>
+                <th>Choice C</th>
+                <th>Choice D</th>
+                <th>Correct Answer</th>
+                <?php if(in_array('updateAssessment', $user_permission) || in_array('deleteAssessment', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
               </thead>
-
             </table>
           </div>
           <!-- /.box-body -->
@@ -66,71 +92,84 @@
     </div>
     <!-- /.row -->
     
-
   </section>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('createStore', $user_permission)): ?>
+<?php if(in_array('createAssessment', $user_permission)): ?>
 <!-- create brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Store</h4>
+        <h4 class="modal-title">Create Question</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('stores/create') ?>" method="post" id="createForm">
+      <form role="form" action="<?php echo base_url('assessments/createQuestion') ?>" method="post" id="createForm">
 
         <div class="modal-body">
-
+           <input type="hidden" name="assessment_id"value="<?php echo $assessment['id']?>">
           <div class="form-group">
-            <label for="brand_name">Store Name</label>
-            <input type="text" class="form-control" id="store_name" name="store_name" placeholder="Enter store name" autocomplete="off">
+            <label for="question">Question</label>
+            <textarea class="form-control" name="question" id="" cols="10" rows="2"></textarea>
+          </div>
+          
+          <label for="Choices">Choices</label>
+          <div class="form-group">
+            <label for="choice_a">A</label>
+            <input type="text" name="choice_a" id="choice_a" class="form-control">
           </div>
           <div class="form-group">
-            <label for="active">Status</label>
-            <select class="form-control" id="active" name="active">
-              <option value="1">Active</option>
-              <option value="2">Inactive</option>
-            </select>
+            <label for="choice_b">B</label>
+            <input type="text" name="choice_b" id="choice_b" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="choice_c">C</label>
+            <input type="text" name="choice_c" id="choice_c" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="choice_d">D</label>
+            <input type="text" name="choice_d" id="choice_d" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="correct">Correct Answer</label>
+            <input type="text" name="correct" id="correct" class="form-control">
           </div>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 
       </form>
-
 
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <?php endif; ?>
 
-<?php if(in_array('updateStore', $user_permission)): ?>
+<?php if(in_array('updateAssessment', $user_permission)): ?>
 <!-- edit brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit Store</h4>
+        <h4 class="modal-title">Edit Assessment</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('stores/update') ?>" method="post" id="updateForm">
+      <form role="form" action="<?php echo base_url('Assessment/update') ?>" method="post" id="editForm">
 
         <div class="modal-body">
-          <div id="messages"></div>
-
+         
           <div class="form-group">
-            <label for="edit_brand_name">Store Name</label>
-            <input type="text" class="form-control" id="edit_store_name" name="edit_store_name" placeholder="Enter store name" autocomplete="off">
+            <label for="edit_firstname">First Name</label>
+            <input type="text" class="form-control" id="edit_firstname" name="edit_firstname" placeholder="Enter First Name" autocomplete="off">
           </div>
+
           <div class="form-group">
             <label for="edit_active">Status</label>
             <select class="form-control" id="edit_active" name="edit_active">
@@ -142,7 +181,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
 
       </form>
@@ -153,44 +192,41 @@
 </div><!-- /.modal -->
 <?php endif; ?>
 
-<?php if(in_array('deleteStore', $user_permission)): ?>
+<?php if(in_array('deleteAssessment', $user_permission)): ?>
 <!-- remove brand modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Remove Store</h4>
+        <h4 class="modal-title">Remove Assessment</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('stores/remove') ?>" method="post" id="removeForm">
+      <form role="form" action="<?php echo base_url('Assessment/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
           <p>Do you really want to remove?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="submit" class="btn btn-primary">Yes</button>
         </div>
       </form>
-
 
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <?php endif; ?>
-
-
 
 <script type="text/javascript">
 var manageTable;
 
 $(document).ready(function() {
-
-  $("#storeNav").addClass('active');
-
+  $("#assessmentNav").addClass('active');
+  $("#mainCourseNav").addClass('active');
+  
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': 'fetchStoresData',
+    'ajax': '<?php echo base_url('assessments/fetchQuestionData/'.$assessment['id']) ?> ',
     'order': []
   });
 
@@ -254,19 +290,25 @@ $(document).ready(function() {
 });
 
 // edit function
-function editFunc(id)
+function edit(id)
 { 
   $.ajax({
-    url: 'fetchStoresDataById/'+id,
+    url: 'fetchAssessmentDataById/'+id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
-
-      $("#edit_store_name").val(response.name);
-      $("#edit_active").val(response.active);
+      
+      $("#edit_firstname").val(response.firstname);
+      $("#edit_lastname").val(response.lastname);
+      $("#edit_email").val(response.email);
+      $("#edit_username").val(response.username);
+      $("#edit_department_id").val(response.department_id);
+     
+      // call the function
+      getDesignation();
 
       // submit the edit from 
-      $("#updateForm").unbind('submit').bind('submit', function() {
+      $("#editForm").unbind('submit').bind('submit', function() {
         var form = $(this);
 
         // remove the text-danger
@@ -338,7 +380,7 @@ function removeFunc(id)
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: { store_id:id }, 
+        data: { Assessment_id:id }, 
         dataType: 'json',
         success:function(response) {
 
@@ -351,7 +393,7 @@ function removeFunc(id)
             '</div>');
 
             // hide the modal
-            $("#removeModal").modal('hide');
+            $("#deleteModal").modal('hide');
 
           } else {
 
@@ -359,6 +401,9 @@ function removeFunc(id)
               '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
               '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
             '</div>'); 
+
+            // hide the modal
+            $("#deleteModal").modal('hide');
           }
         }
       }); 
@@ -367,6 +412,5 @@ function removeFunc(id)
     });
   }
 }
-
 
 </script>
