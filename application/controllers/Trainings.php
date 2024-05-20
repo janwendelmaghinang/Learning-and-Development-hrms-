@@ -104,12 +104,16 @@ class Trainings extends Admin_Controller
 
         	$create = $this->model_training->create($data);
         	if($create == true) {
+				
+				// call send_notification 
+			$eSuccess =  $this->send_notification();
+			if($eSuccess){
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
-
-				// call send_notification 
-            // $this->send_notification();
-				
+			}	
+			else{
+				$response['success'] = false;
+			}
         	}
         	else {
         		$response['success'] = false;
@@ -214,7 +218,7 @@ class Trainings extends Admin_Controller
             'wordwrap'  => TRUE
         );
 
-        $this->load->library('email', $config);
+        $this->load->library('email');
        
 		$employee_email = 'maghinangjanwendel.pdm@gmail.com';
 
@@ -227,7 +231,7 @@ class Trainings extends Admin_Controller
         $message = 'Dear Employee, <br><br> You have an upcoming assessment. Please be prepared.';
 
         // Sender's email address
-        $this->email->from('maghinangjanwendel.pdm@gmail.com', 'wendel');
+        $this->email->from('janwendelmaghinang@gmail.com', 'wendel');
 
         // Recipient's email address
         $this->email->to($employee_email);
@@ -240,10 +244,10 @@ class Trainings extends Admin_Controller
 
         // Send email
         if ($this->email->send()) {
-            echo 'Email sent successfully.';
+            return 'Email sent successfully.';
         } else {
-            echo 'Unable to send email.';
-            echo $this->email->print_debugger();
+            return 'Unable to send email.';
+            // echo $this->email->print_debugger();
         }
     }
 
