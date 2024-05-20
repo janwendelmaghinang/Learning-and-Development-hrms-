@@ -59,20 +59,7 @@ class Model_assessments extends CI_Model
 	{
 		if($data) {
 			$insert = $this->db->insert('assessment_questions', $data);
-			$insert_id = $this->db->insert_id();
-
-			if($insert_id){
-				$choices = array(
-					'question_id' => $insert_id,
-					'a' => $this->input->post('choice_a'),
-					'b' => $this->input->post('choice_b'),
-					'c' => $this->input->post('choice_c'),
-					'd' => $this->input->post('choice_d'),
-					'correct_answer' => $this->input->post('correct')
-				);
-			    $this->db->insert('choices', $choices);
-			}
-			return ($insert_id) ? true : false;
+			return ($insert == true) ? true : false;
 		}
 	}
 
@@ -103,6 +90,7 @@ class Model_assessments extends CI_Model
 			return $query->result_array();
 		}
 	}
+
 	// getAssessmentByCourse
 	public function getAssessmentByCourse($id = null)
 	{
@@ -113,23 +101,54 @@ class Model_assessments extends CI_Model
 		}
 	}
 
+	/* get active Assessment question */
+	public function getAssessmentQuestions($id = null)
+	{
+		$sql = "SELECT * FROM assessment_questions WHERE assessment_id = ?";
+		$query = $this->db->query($sql, array($id));
+		return $query->result_array();
+	}
+
+	// submit exam
+
+	public function submit_exam($data)
+	{
+		if($data) {
+			$insert = $this->db->insert('assessment_answers', $data);
+			return ($insert == true) ? true : false;
+		}
+	}
+
+	// get answer
 		/* get active Assessment question */
-		public function getAssessmentQuestions($id = null)
+		public function getAnswer($user_id = null, $assessment_id = null)
 		{
-			$sql = "SELECT question_id,question,a,b,c,d FROM assessment_questions INNER JOIN choices ON assessment_questions.id = choices.question_id WHERE assessment_questions.assessment_id = ?";
-			$query = $this->db->query($sql, array($id));
+			$sql = "SELECT * FROM assessment_answers WHERE assessment_id = ? AND employee_id = ?";
+			$query = $this->db->query($sql, array($assessment_id, $user_id));
 			return $query->result_array();
 		}
 
-		// submit exam
-
-		public function submit_exam($data)
+			// getCorrect
+		public function getCorrect($id = null)
 		{
-			if($data) {
-				$insert = $this->db->insert('assessment_answers', $data);
-				return ($insert == true) ? true : false;
+			if($id) {
+				$sql = "SELECT * FROM assessment_questions WHERE id = ?";
+				$query = $this->db->query($sql, array($id));
+				return  $query->row_array();
 			}
 		}
+
+		// delete answer
+		public function deleteAnswer($id)
+		{
+			if($id) {
+				$this->db->where('id', $id);
+				$delete = $this->db->delete('assessment_answers');
+				return ($delete == true) ? true : false;
+			}
+		}
+
+	
 	     
 
 

@@ -65,8 +65,11 @@
           <!-- /.box-header -->
           <div class="box-body">
           <?php if(in_array('createAssessment', $user_permission)): ?>
+    
           <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Question</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addModalBulk">Upload Csv</button>
           <br /> <br />
+
         <?php endif; ?>
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
@@ -99,6 +102,33 @@
 
 <?php if(in_array('createAssessment', $user_permission)): ?>
 <!-- create brand modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="addModalBulk">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create Question</h4>
+      </div>
+      <form role="form" action="<?php echo base_url('assessments/process/'.$assessment['id'] ) ?>" enctype="multipart/form-data" method="post" id="createFormBulk"> 
+        <div class="modal-body">
+        <h2>Upload CSV File</h2>
+        <input type="hidden" name="ass_id"value="<?php echo $assessment['id']?>">
+              <input type="file" name="csv_file" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+      </form>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php endif; ?>
+
+<?php if(in_array('createAssessment', $user_permission)): ?>
+<!-- create brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -106,9 +136,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Create Question</h4>
       </div>
-
       <form role="form" action="<?php echo base_url('assessments/createQuestion') ?>" method="post" id="createForm">
-
+         
+      
         <div class="modal-body">
            <input type="hidden" name="assessment_id"value="<?php echo $assessment['id']?>">
           <div class="form-group">

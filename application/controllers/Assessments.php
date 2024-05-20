@@ -81,7 +81,7 @@ class Assessments extends Admin_Controller {
 		$this->form_validation->set_rules('duration', 'Duration', 'trim|required');
 		$this->form_validation->set_rules('duration_type', 'Type', 'trim|required');
         $this->form_validation->set_rules('passing', 'passing', 'trim|required');
-		$this->form_validation->set_rules('attempt', 'Max Attempt', 'trim|required');
+		// $this->form_validation->set_rules('attempt', 'Max Attempt', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
@@ -98,7 +98,7 @@ class Assessments extends Admin_Controller {
 					'assessment_duration' => $this->input->post('duration'),
 					'duration_type' => $this->input->post('duration_type'),
 					'passing_grade' => $this->input->post('passing'),
-					'max_attempt' => $this->input->post('attempt')
+					// 'max_attempt' => $this->input->post('attempt')
 				);
 	
 				$create = $this->model_assessments->create($data);
@@ -139,7 +139,7 @@ class Assessments extends Admin_Controller {
 				$this->form_validation->set_rules('edit_duration', 'Duration', 'trim|required');
 				$this->form_validation->set_rules('edit_duration_type', 'Type', 'trim|required');
 				$this->form_validation->set_rules('edit_passing', 'passing', 'trim|required');
-				$this->form_validation->set_rules('edit_attempt', 'Max Attempt', 'trim|required');
+				// $this->form_validation->set_rules('edit_attempt', 'Max Attempt', 'trim|required');
 				$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	            if ($this->form_validation->run() == TRUE) {	
@@ -147,7 +147,7 @@ class Assessments extends Admin_Controller {
 						'assessment_duration' => $this->input->post('edit_duration'),
 						'duration_type' => $this->input->post('edit_duration_type'),
 						'passing_grade' => $this->input->post('edit_passing'),
-						'max_attempt' => $this->input->post('edit_attempt'),
+						// 'max_attempt' => $this->input->post('edit_attempt'),
 					);
 
 					$update = $this->model_assessments->update($data, $id);
@@ -209,7 +209,7 @@ class Assessments extends Admin_Controller {
             // create a validation here
 			// check id if existing
             $this->data['assessment'] = $this->model_assessments->getAssessmentData($id);
-
+	
 			if($this->data['assessment'] == null){
                 redirect('dashboard', 'refresh');
 			}
@@ -238,7 +238,6 @@ class Assessments extends Admin_Controller {
 		$this->form_validation->set_rules('choice_d', 'choice d', 'trim|required');
 		$this->form_validation->set_rules('correct', 'correct', 'trim|required');
 		
-
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
@@ -246,6 +245,11 @@ class Assessments extends Admin_Controller {
         	$data = array(
         		'question' => $this->input->post('question'),
 				'assessment_id' => $this->input->post('assessment_id'),
+				'a' => $this->input->post('choice_a'),
+				'b' => $this->input->post('choice_b'),
+				'c' => $this->input->post('choice_c'),
+				'd' => $this->input->post('choice_d'),
+				'correct_answer' => $this->input->post('correct')
         	);
 
         	$create = $this->model_assessments->createQuestion($data);
@@ -286,14 +290,13 @@ class Assessments extends Admin_Controller {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>';
 			}
 			
-	    	$choice = $this->model_assessments->getChoiceData($value['id']);
 			$result['data'][$key] = array(
 				$value['question'],
-                $choice['a'],
-				$choice['b'],
-				$choice['c'],
-				$choice['d'],
-				'<span class="label label-success text-uppercase">'.$choice['correct_answer'].'</span>',
+                $value['a'],
+				$value['b'],
+				$value['c'],
+				$value['d'],
+				'<span class="label label-success text-uppercase">'.$value['correct_answer'].'</span>',
 				$buttons
 			);
 		} 
@@ -301,5 +304,36 @@ class Assessments extends Admin_Controller {
 		echo json_encode($result);
 	}
 
+	public function process($id) { 
+        if (isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
+            $file = $_FILES['csv_file']['tmp_name'];
+            $handle = fopen($file, 'r');
+            $header = true;
+
+            while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($header) {
+                    $header = false;
+                    continue;
+                }
+
+                $data = array(
+					'assessment_id' => $this->input->post('ass_id'),
+                    'question' => $row[0],
+                    'a' => $row[1],
+                    'b' => $row[2],
+                    'c' => $row[3],
+                    'd' => $row[4],
+                    'correct_answer' => $row[5]
+                );
+
+				$create = $this->model_assessments->createQuestion($data);
+            }
+            fclose($handle);
+            $this->session->set_flashdata('success', 'CSV File successfully processed and data inserted.');
+        } else {
+            $this->session->set_flashdata('error', 'Error uploading file.');
+        }
+        redirect('assessments/manageassessments/'.$id);
+    }
 
 }

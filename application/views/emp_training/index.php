@@ -49,9 +49,8 @@
               <thead>
               <tr>
                 <th>Courses</th>
+                <th>Passing Grade</th>
                 <th>Status</th>
-                <th>Grade</th>
-                <th>No. of Attempts</th>
                 <th>Action</th>
                 <?php if(in_array('updateDepartment', $user_permission) || in_array('deleteDepartment', $user_permission)): ?>
                 <?php endif; ?>

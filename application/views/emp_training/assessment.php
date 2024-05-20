@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
       <!-- jQuery 3 -->
-  <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> 
+    <script src="<?php echo base_url('assets/bower_components/jquery/dist/jquery.min.js') ?>"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -49,17 +50,11 @@
   </head>
   <body class="bg-gray-100">
     <div class="sidebar">
-      <h1 class="text-2xl font-bold mb-4">Quiz</h1>
+      <h1 class="text-2xl font-bold mb-4">Assessment</h1>
       <div class="progress-bar">
         <div class="progress-bar-inner"></div>
       </div>
       <div id="timer">Time Left: <span id="time">10:00</span></div>
-      <div id="student-info">
-        <h2 class="text-lg font-semibold mt-6 mb-2">Employee Info</h2>
-        <p>Name: John Doe</p>
-        <p>Address: Bulacan</p>
-        <p>Email: jd@gmail.com</p>
-      </div>
     </div>
 
     <div class="content">
@@ -79,7 +74,7 @@
               <input
                 type="radio"
                 name="<?php echo 'choice'.$counter ?>"
-                id="<?php echo $v['question_id'] ?>"
+                id="<?php echo $v['id'] ?>"
                 value="a"
                 class="mr-2"
               />
@@ -89,7 +84,7 @@
               <input
                 type="radio"
                 name="<?php echo 'choice'.$counter ?>"
-                id="<?php echo $v['question_id'] ?>"
+                id="<?php echo $v['id'] ?>"
                 value="b"
                 class="mr-2"
               />
@@ -99,7 +94,7 @@
               <input
                 type="radio"
                 name="<?php echo 'choice'.$counter ?>"
-                id="<?php echo $v['question_id'] ?>"
+                id="<?php echo $v['id'] ?>"
                 value="c"
                 class="mr-2"
               />
@@ -108,7 +103,7 @@
             <label class="block">
               <input type="radio" 
               name="<?php echo 'choice'.$counter ?>" 
-              id="<?php echo $v['question_id'] ?>" 
+              id="<?php echo $v['id'] ?>" 
               value="d" 
               class="mr-2"
              />
@@ -118,9 +113,36 @@
         <?php endforeach ?>
           <!-- More questions... -->
         </form>
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Submit Assessment
+        </button>
       </div>
+      
     </div>
-    <button class="btn" onclick="submitExam()" >Submit</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Submit</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Are your sure?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              <button type="button" onclick="submitExam()" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     <script>
       const radioButtons = document.querySelectorAll('input[type="radio"]');
       const progressBar = document.querySelector(".progress-bar-inner");
@@ -227,14 +249,21 @@
         $.ajax({
           type: "POST",
           url: submitUrl,
-          data: { id: <?php echo $ass_id ?>, data: answers },
+          data: { training_id: <?php echo $id ?>, id: <?php echo $ass_id ?>, data: answers },
           success: function (response) {
             // Handle success response
-            console.log(response);
+            // console.log(response);
+            // if(response.success == true){
+              // clear localstoragae
+              localStorage.setItem("timer", 0);
+              localStorage.removeItem('timer');
+              localStorage.removeItem('userAnswers');
+              window.location.href = '<?php echo base_url('emp_training') ?>';
+            // }
           },
           error: function (xhr, status, error) {
             // Handle error
-            console.error(xhr.responseText);
+            // console.error(xhr.responseText);
           },
         });
       }
@@ -248,5 +277,8 @@
           disableInputFields(); // Disable input fields
         });
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
   </body>
 </html>

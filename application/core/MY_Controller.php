@@ -27,6 +27,7 @@ class Admin_Controller extends MY_Controller
 			$group_data = $this->model_groups->getUserGroupByUserId($user_id);
 			
 			$this->data['user_permission'] = unserialize($group_data['permission']);
+			$this->data['user_role'] = $group_data['group_name'];
 			$this->permission = unserialize($group_data['permission']);
 		}
 	}

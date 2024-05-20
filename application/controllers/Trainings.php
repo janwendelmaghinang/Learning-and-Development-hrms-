@@ -60,21 +60,14 @@ class Trainings extends Admin_Controller
 			$emp = $this->model_employees->getEmployeeData($value['employee_id']);
 			$department = $this->model_departments->getDepartmentData($emp['department_id']);
 			$designation = $this->model_designations->getDesignationData($emp['designation_id']);
-			$attempts = $this->model_assessments->getAttemptData($value['id']);
-			$assessments =  $this->model_assessments->getAssessmentByCourse($value['course_id']);
-            
-            $last_attempt = (!$attempts == '') ? $attempts[count($attempts) - intval(1) ]['grade'] : '';
-            $count_attempt = (!$attempts == '') ? count($attempts) : '0' ;
-			$no_assessments = (!$assessments == '') ? $count_attempt .'/'. $assessments['max_attempt'] : 'No Assessments';
-
+	
 			$result['data'][$key] = array(	
 				$emp['firstname'] .' '. $emp['lastname'] ,
 		        $department['name'],
                 $designation['name'],
 			    $value['date_created'],
 				$course['name'],
-				$last_attempt,
-				$no_assessments,
+                $value['grade'] .' %',
 				$value['status'],
 				$buttons
 			);
@@ -106,14 +99,14 @@ class Trainings extends Admin_Controller
         	if($create == true) {
 				
 				// call send_notification 
-			$eSuccess =  $this->send_notification();
-			if($eSuccess){
+			// $eSuccess = $this->send_notification();
+			// if($eSuccess){
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
-			}	
-			else{
-				$response['success'] = false;
-			}
+			// }	
+			// else{
+			// 	$response['success'] = false;
+			// }
         	}
         	else {
         		$response['success'] = false;
@@ -244,7 +237,7 @@ class Trainings extends Admin_Controller
 
         // Send email
         if ($this->email->send()) {
-            return 'Email sent successfully.';
+            return true;
         } else {
             return 'Unable to send email.';
             // echo $this->email->print_debugger();

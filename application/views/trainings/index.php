@@ -62,9 +62,8 @@
                 <th>Designation</th>
                 <th>Date Created</th>
                 <th>Course</th>
-                <th>Last Attempt</th>
-                <th>No. of Attempts</th>
-                <th>Assessment Status</th>
+                <th>Grade</th>
+                <th>Status</th>
                 <?php if(in_array('updateTraining', $user_permission) || in_array('deleteTraining', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>

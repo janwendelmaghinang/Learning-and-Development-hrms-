@@ -118,10 +118,10 @@
             <input type="number" class="form-control" id="passing" name="passing">
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="attempt">Max Attempt</label>
             <input type="number" class="form-control" id="attempt" name="attempt" >
-          </div>
+          </div> -->
 
         </div>
 
@@ -179,10 +179,10 @@
             <input type="number" class="form-control" id="edit_passing" name="edit_passing">
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="edit_attempt">Max Attempt</label>
             <input type="number" class="form-control" id="edit_attempt" name="edit_attempt" >
-          </div>
+          </div> -->
 
         </div>
 
@@ -312,7 +312,7 @@ function edit(id)
       $("#edit_duration").val(response.data.assessment_duration);
       $("#edit_duration_type").val(response.data.duration_type);
       $("#edit_passing").val(response.data.passing_grade);
-      $("#edit_attempt").val(response.data.max_attempt);
+      // $("#edit_attempt").val(response.data.max_attempt);
      
       // submit the edit from 
       $("#editForm").unbind('submit').bind('submit', function() {
