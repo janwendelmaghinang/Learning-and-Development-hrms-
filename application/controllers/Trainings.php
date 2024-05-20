@@ -13,48 +13,32 @@ class Trainings extends Admin_Controller
 		$this->load->model('model_departments');
 		$this->load->model('model_designations');
 		$this->load->model('model_employees');
-		$this->load->model('model_types');
+		$this->load->model('model_courses');
+		$this->load->model('model_assessments');
 	}
 
-	/* 
-	* It only redirects to the manage Training page
-	*/
 	public function index()
 	{
 
 		if(!in_array('viewTraining', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}  
-		$this->data['types'] = $this->model_types->getTrainingTypesData();
+
+		$this->data['courses'] = $this->model_courses->getCourseData();
 		$this->data['departments'] = $this->model_departments->getDepartmentData();
 		$this->render_template('trainings/index', $this->data);	
 	}	
 
-	/*
-	* It checks if it gets the Training id and retreives
-	* the Training information from the Training model and 
-	* returns the data into json format. 
-	* This function is invoked from the view page.
-	*/
 	public function fetchTrainingDataById($id) 
 	{
 		if($id) {
 			$data = $this->model_training->getTrainingData($id);
-			// $emp = $this->model_employees->getEmployeeData($data['employee_id']);
-			// $data['employee'] = $emp; 
-			// $data['department'] = $this->model_departments->getDepartmentData($emp['department_id']);
-			// $data['designation'] = $this->model_designations->getDesignationData($emp['designation_id']);
-			// $data['type'] = $this->model_types->getTrainingTypesData($data['type_id']);
 			echo json_encode($data);
 		}
 
 		return false;
 	}
-
-	/*
-	* Fetches the Training value from the Training table 
-	* this function is called from the datatable ajax function
-	*/          
+       
 	public function fetchTrainingData()
 	{
 		$result = array('data' => array());
@@ -63,10 +47,6 @@ class Trainings extends Admin_Controller
 		foreach ($data as $key => $value) {
 			// button
 			$buttons = '';
-			
-			// if(in_array('updateTraining', $this->permission)) {
-			// 	$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-eye"></i></button>';
-			// }
 
 			if(in_array('updateTraining', $this->permission)) {
 				$buttons .= '<button type="button" class="btn btn-default" onclick="edit('.$value['id'].')" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>';
@@ -75,19 +55,26 @@ class Trainings extends Admin_Controller
 			if(in_array('deleteTraining', $this->permission)) {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>';
 			}
-			$type = $this->model_types->getTrainingTypesData($value['type_id']);
+
+			$course = $this->model_courses->getCourseData($value['course_id']);
 			$emp = $this->model_employees->getEmployeeData($value['employee_id']);
 			$department = $this->model_departments->getDepartmentData($emp['department_id']);
 			$designation = $this->model_designations->getDesignationData($emp['designation_id']);
-			// $status = ($value['status'] == 'pending') ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
+			$attempts = $this->model_assessments->getAttemptData($value['id']);
+			$assessments =  $this->model_assessments->getAssessmentByCourse($value['course_id']);
+            
+            $last_attempt = (!$attempts == '') ? $attempts[count($attempts) - intval(1) ]['grade'] : '';
+            $count_attempt = (!$attempts == '') ? count($attempts) : '0' ;
+			$no_assessments = (!$assessments == '') ? $count_attempt .'/'. $assessments['max_attempt'] : 'No Assessments';
 
 			$result['data'][$key] = array(	
+				$emp['firstname'] .' '. $emp['lastname'] ,
 		        $department['name'],
                 $designation['name'],
-				$type['name'],
-				$emp['firstname'] .' '. $emp['lastname'] ,
-				$value['startdate'],
-				$value['enddate'],
+			    $value['date_created'],
+				$course['name'],
+				$last_attempt,
+				$no_assessments,
 				$value['status'],
 				$buttons
 			);
@@ -96,11 +83,6 @@ class Trainings extends Admin_Controller
 		echo json_encode($result);
 	}
 
-	/*
-	* Its checks the Training form validation 
-	* and if the validation is successfully then it inserts the data into the database 
-	* and returns the json format operation messages
-	*/
 	public function create()
 	{
 		if(!in_array('createTraining', $this->permission)) {
@@ -108,32 +90,26 @@ class Trainings extends Admin_Controller
 		}
 
 		$response = array();
-
-		$this->form_validation->set_rules('designation_id', 'Designation', 'trim|required');
-		$this->form_validation->set_rules('department_id', 'Department', 'trim|required');
-		$this->form_validation->set_rules('type_id', 'Training type', 'trim|required');
+		$this->form_validation->set_rules('course_id', 'Course', 'trim|required');
 		$this->form_validation->set_rules('employee_id', 'Employee', 'trim|required');
-		$this->form_validation->set_rules('start_date', 'Start Date', 'trim|required');
-		$this->form_validation->set_rules('end_date', 'End Date', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
         if ($this->form_validation->run() == TRUE) {
         	$data = array(
-        		// 'designation_id' => $this->input->post('designation_id'),
-				// 'department_id' => $this->input->post('department_id'),	
 				'description' => $this->input->post('desc'),
-				'type_id' => $this->input->post('type_id'),	
+				'course_id' => $this->input->post('course_id'),	
 				'employee_id' => $this->input->post('employee_id'),	
-				'startdate' => $this->input->post('start_date'),	
-				'enddate' => $this->input->post('end_date'),
-				'status' => 'pending'	
         	);
 
         	$create = $this->model_training->create($data);
         	if($create == true) {
         		$response['success'] = true;
         		$response['messages'] = 'Succesfully created';
+
+				// call send_notification 
+            // $this->send_notification();
+				
         	}
         	else {
         		$response['success'] = false;
@@ -150,11 +126,6 @@ class Trainings extends Admin_Controller
         echo json_encode($response);
 	}
 
-	/*
-	* Its checks the Training form validation 
-	* and if the validation is successfully then it updates the data into the database 
-	* and returns the json format operation messages
-	*/
 	public function update($id)
 	{
 		if(!in_array('updateTraining', $this->permission)) {
@@ -201,10 +172,6 @@ class Trainings extends Admin_Controller
 		echo json_encode($response);
 	}
 
-	/*
-	* It removes the Training information from the database 
-	* and returns the json format operation messages
-	*/
 	public function remove()
 	{
 		if(!in_array('deleteTraining', $this->permission)) {
@@ -232,5 +199,52 @@ class Trainings extends Admin_Controller
 
 		echo json_encode($response);
 	}
+
+	public function send_notification() {
+
+		$config = array(
+            'protocol'  => 'smtp',
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_port' => 587,
+            'smtp_user' => 'janwendelmaghinang@gmail.com',
+            'smtp_pass' => 'janwendel00000100',
+			'smtp_crypto' => 'tls',
+            'mailtype'  => 'html',
+            'charset'   => 'iso-8859-1',
+            'wordwrap'  => TRUE
+        );
+
+        $this->load->library('email', $config);
+       
+		$employee_email = 'maghinangjanwendel.pdm@gmail.com';
+
+        // Email configuration
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+
+        // Compose email
+        $subject = 'Assessment Notification';
+        $message = 'Dear Employee, <br><br> You have an upcoming assessment. Please be prepared.';
+
+        // Sender's email address
+        $this->email->from('maghinangjanwendel.pdm@gmail.com', 'wendel');
+
+        // Recipient's email address
+        $this->email->to($employee_email);
+
+        // Email subject
+        $this->email->subject($subject);
+
+        // Email message
+        $this->email->message($message);
+
+        // Send email
+        if ($this->email->send()) {
+            echo 'Email sent successfully.';
+        } else {
+            echo 'Unable to send email.';
+            echo $this->email->print_debugger();
+        }
+    }
 
 }

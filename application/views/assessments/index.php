@@ -49,7 +49,7 @@
               <thead>
               <tr>
                 <th>Course</th>
-                <th>Passing Grade <span class="text-danger">%</span></th>
+                <th>Passing Grade <span class="text-danger"></span></th>
                 <th>Max Attempt</th>
                 <?php if(in_array('updateAssessment', $user_permission) || in_array('deleteAssessment', $user_permission)): ?>
                   <th>Action</th>
@@ -98,16 +98,16 @@
           <div class="grid grid-cols-2 gap-3 border  p-3">
             <div class="w-full">
               <div class="form-group">
-                <label for="duration">Duration</label>
+                <label for="duration">Assessment Duration</label>
                 <input type="number" class="form-control" id="duration" name="duration">
               </div>
             </div>
             <div class="w-full">
                <div class="form-group">
-                <label for="time_type">Type</label>
-                 <select name="" id="" class="form-control">
-                 <option value="minute">Minutes</option>
-                  <option value="hour">Hours</option>
+                <label for="duration_type">Type</label>
+                 <select name="duration_type" id="" class="form-control">
+                 <option value="minutes">minutes</option>
+                  <option value="hours">hours</option>
                  </select>
                </div>
             </div>
@@ -147,65 +147,43 @@
         <h4 class="modal-title">Edit Assessment</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('Assessment/update') ?>" method="post" id="editForm">
+      <form role="form" action="<?php echo base_url('assessments/update') ?>" method="post" id="editForm">
 
         <div class="modal-body">
          
           <div class="form-group">
-            <label for="edit_firstname">First Name</label>
-            <input type="text" class="form-control" id="edit_firstname" name="edit_firstname" placeholder="Enter First Name" autocomplete="off">
-          </div>
-
-          <div class="form-group">
-            <label for="edit_lastname">Last Name</label>
-            <input type="text" class="form-control" id="edit_lastname" name="edit_lastname" placeholder="Enter Last Name" autocomplete="off">
-          </div>
-
-          <div class="form-group">
-            <label for="edit_username">Username</label>
-            <input type="text" class="form-control" id="edit_username" name="edit_username" placeholder="Enter username" autocomplete="off">
-          </div>
-
-          <div class="form-group">
-            <label for="edit_email">Email</label>
-            <input type="email" class="form-control" id="edit_email" name="edit_email" placeholder="Enter Email" autocomplete="off">
+            <label for="course_name">Courses</label>
+            <input class="form-control" disabled type="text" name="course_name" id="course_name">
           </div>
           
-          <div class="form-group">
-            <div class="alert alert-info alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Leave the password field empty if you don't want to change.
+          <div class="grid grid-cols-2 gap-3 border  p-3">
+            <div class="w-full">
+              <div class="form-group">
+                <label for="edit_duration">Assessment Duration</label>
+                <input type="number" class="form-control" id="edit_duration" name="edit_duration">
+              </div>
+            </div>
+            <div class="w-full">
+               <div class="form-group">
+                <label for="edit_duration_type">Type</label>
+                 <select name="edit_duration_type" id="edit_duration_type" class="form-control">
+                 <option value="minutes">minutes</option>
+                  <option value="hours">hours</option>
+                 </select>
+               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="edit_password">Password</label>
-            <input type="password" class="form-control" id="edit_password" name="edit_password" placeholder="Enter Password" autocomplete="off">
-          </div>
-        
-          <div class="form-group">
-            <label for="edit_department_id">Department</label>
-            <select class="form-control" name="edit_department_id" id="edit_department_id"onChange="getDesignation()">
-              <option value="">Select Department</option>
-              <?php foreach ($departments as $v): ?>
-                <option value="<?php echo $v['id'] ?>"> <?php echo $v['name'] ?> </option>
-              <?php endforeach ?>
-            </select>
+            <label for="edit_passing">Passing Grade<span class="text-success">(%)</span></label>
+            <input type="number" class="form-control" id="edit_passing" name="edit_passing">
           </div>
 
           <div class="form-group">
-            <label for="edit_designation_id">Designation</label>
-            <select class="form-control" name="edit_designation_id" id="edit_designation_id">
-            </select>
+            <label for="edit_attempt">Max Attempt</label>
+            <input type="number" class="form-control" id="edit_attempt" name="edit_attempt" >
           </div>
 
-          <div class="form-group">
-            <label for="edit_active">Status</label>
-            <select class="form-control" id="edit_active" name="edit_active">
-              <option value="1">Active</option>
-              <option value="2">Inactive</option>
-            </select>
-          </div>
         </div>
 
         <div class="modal-footer">
@@ -325,20 +303,17 @@ $(document).ready(function() {
 function edit(id)
 { 
   $.ajax({
-    url: 'fetchAssessmentDataById/'+id,
+    url: '<?php echo base_url('assessments/fetchAssessmentDataById/')?>'+id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
       
-      $("#edit_firstname").val(response.firstname);
-      $("#edit_lastname").val(response.lastname);
-      $("#edit_email").val(response.email);
-      $("#edit_username").val(response.username);
-      $("#edit_department_id").val(response.department_id);
+      $("#course_name").val(response.course.name);
+      $("#edit_duration").val(response.data.assessment_duration);
+      $("#edit_duration_type").val(response.data.duration_type);
+      $("#edit_passing").val(response.data.passing_grade);
+      $("#edit_attempt").val(response.data.max_attempt);
      
-      // call the function
-      getDesignation();
-
       // submit the edit from 
       $("#editForm").unbind('submit').bind('submit', function() {
         var form = $(this);
@@ -445,46 +420,4 @@ function removeFunc(id)
   }
 }
 
-function getDesignation(){
-var id = document.querySelector('#department_id').value
-var edit_id = document.querySelector('#edit_department_id').value
-if(id){
-  $.ajax({
-      url: '<?php echo base_url('Designations/fetchDesignationByDeptId/')?>'+id,
-      type: 'get',
-      dataType: 'json',
-      success:function(response){
-          $('#designation_id').html('');
-          $('#designation_id').append('<option value="">Select Designation</option>');
-
-          for(var i = 0; i < response.length; i++){
-            $('#designation_id').append(
-              '<option value="'+response[i].id+'">'+ response[i].name +'</option>'
-            )
-          }
-      }
-    });
-}else{
-  // clear the designation form
-  $('#designation_id').html('');
-}
-if(edit_id){
-  $.ajax({
-      url: '<?php echo base_url('Designations/fetchDesignationByDeptId/')?>'+edit_id,
-      type: 'get',
-      dataType: 'json',
-      success:function(response){
-          $('#edit_designation_id').html('');
-          for(var i = 0; i < response.length; i++){
-            $('#edit_designation_id').append(
-              '<option value="'+response[i].id+'">'+ response[i].name +'</option>'
-            )
-          }
-      }
-    });
-}else{
-  // clear the designation form
-  $('#edit_designation_id').html('');
-}
-}
 </script>

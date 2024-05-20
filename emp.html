@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .sidebar {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #343a40;
+        padding-top: 20px;
+      }
+      .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+      }
+      .sidebar a:hover {
+        background-color: #575d63;
+      }
+      .content {
+        margin-left: 260px;
+        padding: 20px;
+      }
+      .navbar {
+        background-color: #007bff;
+      }
+      .navbar a {
+        color: white;
+        text-decoration: none;
+      }
+      .card-header {
+        background-color: #007bff;
+        color: white;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2 class="text-center text-white">Employee</h2>
+      <a href="#notifications">View Notifications</a>
+      <a href="#exams">Take Exam Assessment</a>
+      <a href="#courses">List of Courses</a>
+      <a href="#training">Training Courses</a>
+      <a href="#profile">Profile</a>
+    </div>
+
+    <div class="content">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">Home</a>
+      </nav>
+      <div class="container mt-4">
+        <div id="notifications" class="card mb-4">
+          <div class="card-header">View Notifications</div>
+          <div class="card-body">
+            <p>No new notifications</p>
+          </div>
+        </div>
+        <div id="exams" class="card mb-4">
+          <div class="card-header">Take Exam Assessment</div>
+          <div class="card-body">
+            <p>Number of attempts are recorded.</p>
+            <button class="btn btn-primary">Start Exam</button>
+          </div>
+        </div>
+        <div id="courses" class="card mb-4">
+          <div class="card-header">List of Courses</div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>Department</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Marketing Strategy</td>
+                  <td>Marketing</td>
+                  <td>Advanced strategies for effective marketing</td>
+                </tr>
+                <tr>
+                  <td>Frontend Development with Vue.js</td>
+                  <td>IT</td>
+                  <td>Building web applications using Vue.js</td>
+                </tr>
+                <!-- Add more courses as needed -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="training" class="card mb-4">
+          <div class="card-header">Training Courses</div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Training Course</th>
+                  <th>Department</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Advanced Sales Techniques</td>
+                  <td>Sales</td>
+                  <td>In-depth training on advanced sales techniques</td>
+                </tr>
+                <tr>
+                  <td>JavaScript for Beginners</td>
+                  <td>IT</td>
+                  <td>Basic JavaScript programming concepts</td>
+                </tr>
+                <!-- Add more training courses as needed -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="profile" class="card mb-4">
+          <div class="card-header">Profile</div>
+          <div class="card-body">
+            <p>Name: Employee Name</p>
+            <p>Department: Marketing</p>
+            <p>Designation: Sales</p>
+            <!-- Add more profile details as needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

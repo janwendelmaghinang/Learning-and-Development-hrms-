@@ -27,10 +27,7 @@ class Training_types extends Admin_Controller
 		$this->render_template('trainingtypes/index', $this->data);
 	}
 
-	/*
-	* Fetches the brand data from the brand table 
-	* this function is called from the datatable ajax function
-	*/              
+           
 	public function fetchTrainingTypesData()
 	{
 		$result = array('data' => array());
@@ -61,13 +58,7 @@ class Training_types extends Admin_Controller
 
 		echo json_encode($result);
 	}
-
-	/*
-	* It checks if it gets the brand id and retreives
-	* the brand information from the brand model and 
-	* returns the data into json format. 
-	* This function is invoked from the view page.
-	*/             
+            
 	public function fetchTrainingTypesDataById($id)
 	{
 		if($id) {
@@ -78,11 +69,7 @@ class Training_types extends Admin_Controller
 		return false;
 	}
 
-	/*
-	* Its checks the brand form validation 
-	* and if the validation is successfully then it inserts the data into the database 
-	* and returns the json format operation messages
-	*/
+
 	public function create()
 	{
 
@@ -124,11 +111,7 @@ class Training_types extends Admin_Controller
 
 	}
 
-	/*
-	* Its checks the brand form validation 
-	* and if the validation is successfully then it updates the data into the database 
-	* and returns the json format operation messages
-	*/
+
 	public function update($id)
 	{
 		if(!in_array('updateTrainingTypes', $this->permission)) {
@@ -174,10 +157,7 @@ class Training_types extends Admin_Controller
 		echo json_encode($response);
 	}
 
-	/*
-	* It removes the training type information from the database 
-	* and returns the json format operation messages
-	*/
+
 	public function remove()
 	{
 		if(!in_array('deleteTrainingTypes', $this->permission)) {

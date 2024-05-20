@@ -57,13 +57,14 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
+                <th>Employee</th>
                 <th>Department</th>
                 <th>Designation</th>
-                <th>Training Type</th>
-                <th>Employee</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
+                <th>Date Created</th>
+                <th>Course</th>
+                <th>Last Attempt</th>
+                <th>No. of Attempts</th>
+                <th>Assessment Status</th>
                 <?php if(in_array('updateTraining', $user_permission) || in_array('deleteTraining', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
@@ -116,29 +117,19 @@
           </div>
          
           <div class="form-group">
-            <label for="type_id">Training Type</label>
-            <select class="form-control" name="type_id" id="type_id">
-              <option value="">Select Training Type</option>
-              <?php  foreach ($types as $v): ?>
-                <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
-              <?php endforeach ?>
-            </select>
-          </div>
-
-          <div class="form-group">
             <label for="employee_id">Employee</label>
             <select class="form-control" name="employee_id" id="employee_id">
             </select>
           </div>
-        
+
           <div class="form-group">
-            <label for="start_date">Start Date</label>
-            <input class="form-control" type="date" name="start_date" id="start_date">
-          </div>
-          
-          <div class="form-group">
-            <label for="end_date">End Date</label>
-            <input class="form-control" type="date" name="end_date" id="end_date">
+            <label for="course_id">Course</label>
+            <select class="form-control" name="course_id" id="course_id">
+              <option value="">Select Course</option>
+              <?php  foreach ($courses as $v): ?>
+                <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
+              <?php endforeach ?>
+            </select>
           </div>
 
           <div class="form-group">

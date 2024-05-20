@@ -18,9 +18,7 @@ class Employee extends Admin_Controller
 		$this->load->model('model_groups');
 	}
 
-	/* 
-	* It only redirects to the manage Employee page
-	*/
+
 	public function index()
 	{
 
@@ -32,12 +30,7 @@ class Employee extends Admin_Controller
 		$this->render_template('employees/index', $this->data);	
 	}	
 
-	/*
-	* It checks if it gets the Employee id and retreives
-	* the Employee information from the Employee model and 
-	* returns the data into json format. 
-	* This function is invoked from the view page.
-	*/
+
 	public function fetchEmployeeDataById($id) 
 	{
 		if($id) {
@@ -68,10 +61,7 @@ class Employee extends Admin_Controller
 
 		return false;
 	}
-	/*
-	* Fetches the Employee value from the Employee table 
-	* this function is called from the datatable ajax function
-	*/          
+        
 	public function fetchEmployeeData()
 	{
 		$result = array('data' => array());
@@ -106,11 +96,7 @@ class Employee extends Admin_Controller
 		echo json_encode($result);
 	}
 
-	/*
-	* Its checks the Employee form validation 
-	* and if the validation is successfully then it inserts the data into the database 
-	* and returns the json format operation messages
-	*/
+
 	public function create()
 	{
 		if(!in_array('createEmployee', $this->permission)) {
@@ -165,11 +151,7 @@ class Employee extends Admin_Controller
         echo json_encode($response);
 	}
 
-	/*
-	* Its checks the Employee form validation 
-	* and if the validation is successfully then it updates the data into the database 
-	* and returns the json format operation messages
-	*/
+
 	public function update($id)
 	{
 
@@ -251,10 +233,6 @@ class Employee extends Admin_Controller
 		echo json_encode($response);
 	}
 
-	/*
-	* It removes the Employee information from the database 
-	* and returns the json format operation messages
-	*/
 	public function remove()
 	{
 		if(!in_array('deleteEmployee', $this->permission)) {

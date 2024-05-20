@@ -94,4 +94,43 @@ class Model_assessments extends CI_Model
 		}
 	}
 
+	/* get the Assessment attemtps data */
+	public function getAttemptData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM assessment_attempts WHERE training_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->result_array();
+		}
+	}
+	// getAssessmentByCourse
+	public function getAssessmentByCourse($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM assessments WHERE course_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return  $query->row_array();
+		}
+	}
+
+		/* get active Assessment question */
+		public function getAssessmentQuestions($id = null)
+		{
+			$sql = "SELECT question_id,question,a,b,c,d FROM assessment_questions INNER JOIN choices ON assessment_questions.id = choices.question_id WHERE assessment_questions.assessment_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->result_array();
+		}
+
+		// submit exam
+
+		public function submit_exam($data)
+		{
+			if($data) {
+				$insert = $this->db->insert('assessment_answers', $data);
+				return ($insert == true) ? true : false;
+			}
+		}
+	     
+
+
 }

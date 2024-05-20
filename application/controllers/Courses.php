@@ -16,9 +16,6 @@ class Courses extends Admin_Controller {
 		$this->load->model('model_checking');
 	}
 
-	/* 
-	* It only redirects to the manage Course page
-	*/
 	public function index()
 	{
 
@@ -29,16 +26,10 @@ class Courses extends Admin_Controller {
 		$this->render_template('courses/index', $this->data);	
 	}	
 
-	/*
-	* It checks if it gets the Course id and retreives
-	* the Course information from the Course model and 
-	* returns the data into json format. 
-	* This function is invoked from the view page.
-	*/
 	public function fetchCourseDataById($id) 
 	{
 		if($id) {
-			$data = $this->model_Courses->getCourseData($id);
+			$data = $this->model_courses->getCourseData($id);
 			echo json_encode($data);
 		}
 
@@ -65,10 +56,8 @@ class Courses extends Admin_Controller {
 
 		return false;
 	}
-	/*
-	* Fetches the Course value from the Course table 
-	* this function is called from the datatable ajax function
-	*/          
+
+	
 	public function fetchCourseData()
 	{
 		$result = array('data' => array());
@@ -87,12 +76,12 @@ class Courses extends Admin_Controller {
 			}
 			
 			// $status = ($value['active'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
-
+            $type = ($value['duration'] == 1) ? ($value['duration_type'] == 'hours') ? 'hour' : 'minute' : $value['duration_type'];
 			$result['data'][$key] = array(
 				$value['name'],
                 $value['department'],
                 $value['designation'],
-				$value['duration'].' hours',
+				$value['duration'].' '.$type,
 				$buttons
 			);
 		} // /foreach
@@ -100,11 +89,6 @@ class Courses extends Admin_Controller {
 		echo json_encode($result);
 	}
 
-	/*
-	* Its checks the Course form validation 
-	* and if the validation is successfully then it inserts the data into the database 
-	* and returns the json format operation messages
-	*/
 	public function create()
 	{
 		if(!in_array('createCourse', $this->permission)) {
@@ -115,6 +99,7 @@ class Courses extends Admin_Controller {
 
 		$this->form_validation->set_rules('course_name', 'Course name', 'trim|required');
         $this->form_validation->set_rules('duration', 'duration', 'trim|required');
+		$this->form_validation->set_rules('duration_type', 'duration type', 'trim|required');
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
@@ -122,7 +107,9 @@ class Courses extends Admin_Controller {
             
         	$data = array(
         		'name' => $this->input->post('course_name'),
-				'duration' => $this->input->post('duration')
+				'duration' => $this->input->post('duration'),
+				'duration_type' => $this->input->post('duration_type'),
+				'date_created' => date('M d, Y')
         	);
 			if($this->input->post('department_id')){
 				$department = $this->model_departments->getDepartmentData($this->input->post('department_id'));
@@ -153,11 +140,7 @@ class Courses extends Admin_Controller {
         echo json_encode($response);
 	}
 
-	/*
-	* Its checks the Course form validation 
-	* and if the validation is successfully then it updates the data into the database 
-	* and returns the json format operation messages
-	*/
+
 	public function update($id)
 	{
 
@@ -167,82 +150,40 @@ class Courses extends Admin_Controller {
 
 		$response = array();
 
-		if($id) {
-			$this->form_validation->set_rules('edit_firstname', 'Firstname', 'trim|required');
-			$this->form_validation->set_rules('edit_lastname', 'Lastname', 'trim|required');
-			$this->form_validation->set_rules('edit_username', 'Username', 'trim|required|min_length[5]|max_length[12]');
-			$this->form_validation->set_rules('edit_email', 'Email', 'trim|required|min_length[5]');
-            if(!empty($this->input->post('edit_password'))){
-				$this->form_validation->set_rules('edit_password', 'Password', 'trim|required|min_length[8]');
-			}
-			$this->form_validation->set_rules('edit_designation_id', 'Designation', 'trim|required');
-			$this->form_validation->set_rules('edit_department_id', 'Department', 'trim|required');
-			$this->form_validation->set_rules('edit_active', 'Active', 'trim|required');
+		if($id){
+			$this->form_validation->set_rules('edit_course_name', 'Course Name', 'trim|required');
+			$this->form_validation->set_rules('edit_duration', 'Duration', 'trim|required');
+			$this->form_validation->set_rules('edit_duration_type', 'Type', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
 	        if ($this->form_validation->run() == TRUE) {	
-				if(empty($this->input->post('edit_password'))){
-					$data = array(
-						'firstname' => $this->input->post('edit_firstname'),
-						'lastname' => $this->input->post('edit_lastname'),
-						'username' => $this->input->post('edit_username'),
-						'email' => $this->input->post('edit_email'),
-						'department_id' => $this->input->post('edit_department_id'),
-						'designation_id' => $this->input->post('edit_designation_id'),
-					);
+				$data = array(
+					'name' => $this->input->post('edit_course_name'),
+					'duration' => $this->input->post('edit_duration'),
+					'duration_type' => $this->input->post('edit_duration_type'),
+				);
 
-					$update = $this->model_Courses->update($data, $id);
-					if($update == true) {
-						$response['success'] = true;
-						$response['messages'] = 'Succesfully updated';
-					}
-					else {
-						$response['success'] = false;
-						$response['messages'] = 'Error in the database while updated the brand information';			
-					}
-				} 
-				else{
-					$data = array(
-						'firstname' => $this->input->post('edit_firstname'),
-						'lastname' => $this->input->post('edit_lastname'),
-						'username' => $this->input->post('edit_username'),
-						'password' => password_hash($this->input->post('edit_password'),PASSWORD_DEFAULT),
-						'email' => $this->input->post('edit_email'),
-						'department_id' => $this->input->post('edit_department_id'),
-						'designation_id' => $this->input->post('edit_designation_id'),
-					);
-
-					$update = $this->model_courses->update($data, $id);
-					if($update == true) {
-						$response['success'] = true;
-						$response['messages'] = 'Succesfully updated';
-					}
-					else {
-						$response['success'] = false;
-						$response['messages'] = 'Error in the database while updated the brand information';			
-					}
+				$update = $this->model_courses->update($data, $id);
+				if($update == true) {
+					$response['success'] = true;
+					$response['messages'] = 'Succesfully updated';
 				}
-	        }
-	        else {
-	        	$response['success'] = false;
-	        	foreach ($_POST as $key => $value) {
-	        		$response['messages'][$key] = form_error($key);
-	        	}
-	        }
-		}
-		else {
+				else {
+					$response['success'] = false;
+					$response['messages'] = 'Error in the database while updated the courses information';			
+				}
+			}
+		}else{
 			$response['success'] = false;
-    		$response['messages'] = 'Error please refresh the page again!!';
+			foreach ($_POST as $key => $value) {
+				$response['messages'][$key] = form_error($key);
+			}
 		}
-
 		echo json_encode($response);
-	}
+    }
 
-	/*
-	* It removes the Course information from the database 
-	* and returns the json format operation messages
-	*/
+	
 	public function remove()
 	{
 		if(!in_array('deleteCourse', $this->permission)) {

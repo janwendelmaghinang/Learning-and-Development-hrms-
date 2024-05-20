@@ -29,19 +29,12 @@ class Designations extends Admin_Controller
 		$this->render_template('designations/index', $this->data);	
 	}	
 
-	/*
-	* It checks if it gets the Designation id and retreives
-	* the Designation information from the Designation model and 
-	* returns the data into json format. 
-	* This function is invoked from the view page.
-	*/
 	public function fetchDesignationDataById($id) 
 	{
 		if($id) {
 			$data = $this->model_designations->getDesignationData($id);
 			echo json_encode($data);
 		}
-
 		return false;
 	}
 
@@ -51,17 +44,12 @@ class Designations extends Admin_Controller
 			$data = $this->model_designations->getDesignationByDeptId($id);
 			echo json_encode($data);
 		}
-
 		return false;
 	}
-
-
-	/*
-	* Fetches the Designation value from the Designation table 
-	* this function is called from the datatable ajax function
-	*/          
+            
 	public function fetchDesignationData()
 	{
+
 		$result = array('data' => array());
 
 		$data = $this->model_designations->getDesignationData();
@@ -94,11 +82,6 @@ class Designations extends Admin_Controller
 		echo json_encode($result);
 	}
 
-	/*
-	* Its checks the Designation form validation 
-	* and if the validation is successfully then it inserts the data into the database 
-	* and returns the json format operation messages
-	*/
 	public function create()
 	{
 		if(!in_array('createDesignation', $this->permission)) {
@@ -140,11 +123,6 @@ class Designations extends Admin_Controller
         echo json_encode($response);
 	}
 
-	/*
-	* Its checks the Designation form validation 
-	* and if the validation is successfully then it updates the data into the database 
-	* and returns the json format operation messages
-	*/
 	public function update($id)
 	{
 
@@ -191,10 +169,7 @@ class Designations extends Admin_Controller
 		echo json_encode($response);
 	}
 
-	/*
-	* It removes the Designation information from the database 
-	* and returns the json format operation messages
-	*/
+
 	public function remove()
 	{
 		if(!in_array('deleteDesignation', $this->permission)) {

@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Manage
-      <small>Course</small>
+      <small>Courses</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Course</li>
+      <li class="active">Courses</li>
     </ol>
   </section>
 
@@ -35,7 +35,7 @@
         <?php endif; ?>
 
         <?php if(in_array('createCourse', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Course</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Courses</button>
           <br /> <br />
         <?php endif; ?>
 
@@ -78,13 +78,13 @@
 <!-- /.content-wrapper -->
 
 <?php if(in_array('createCourse', $user_permission)): ?>
-<!-- create brand modal -->
+<!-- create courses modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Course</h4>
+        <h4 class="modal-title">Add Courses</h4>
       </div>
 
       <form role="form" action="<?php echo base_url('courses/create') ?>" method="post" id="createForm">
@@ -93,17 +93,26 @@
          
           <div class="form-group">
             <label for="course_name">Course Name</label>
-            <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter First Name" autocomplete="off">
+            <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course Name" autocomplete="off">
           </div>
           
-          <div class="form-group">
-            <label for="duration">Duration  <span class="text-success">(hours)</span></label>
-            <input type="number" class="form-control" id="duration" name="duration" id="duration" autocomplete="off">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="duration">Duration</label>
+              <input type="number" class="form-control" id="duration" name="duration"  autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="duration_type">Type</label>
+              <select name="duration_type" id="duration_type" class="form-control">
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+              </select>
+              </div>
           </div>
        
           <div class="form-group">
             <label for="department_id">Department</label>
-            <select class="form-control" name="department_id" id="department_id"onChange="getDesignation()">
+            <select class="form-control" name="department_id" id="department_id" onChange="getDesignation()">
               <option value="">Select Department</option>
               <?php foreach ($departments as $v): ?>
                 <option value="<?php echo $v['id'] ?>"> <?php echo $v['name'] ?> </option>
@@ -117,13 +126,6 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="active">Status</label>
-            <select class="form-control" id="active" name="active">
-              <option value="1">Active</option>
-              <option value="2">Inactive</option>
-            </select>
-          </div>
         </div>
 
         <div class="modal-footer">
@@ -140,7 +142,7 @@
 <?php endif; ?>
 
 <?php if(in_array('updateCourse', $user_permission)): ?>
-<!-- edit brand modal -->
+<!-- edit courses modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -153,12 +155,26 @@
 
         <div class="modal-body">
          
-          <div class="form-group">
-            <label for="edit_course_name">Name</label>
-            <input type="text" class="form-control" id="edit_course_name" name="edit_course_name" placeholder="Enter First Name" autocomplete="off">
+        <div class="form-group">
+            <label for="edit_course_name">Course Name</label>
+            <input type="text" class="form-control" id="edit_course_name" name="edit_course_name" placeholder="Enter Course" autocomplete="off">
           </div>
-
-          <div class="form-group">
+          
+          <div class="grid grid-cols-2 gap-2">
+            <div class="form-group">
+              <label for="edit_duration">Duration</label>
+              <input type="number" class="form-control" id="edit_duration" name="edit_duration" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="edit_duration_type">Type</label>
+              <select name="edit_duration_type" id="edit_duration_type" class="form-control">
+                <option value="minutes">minutes</option>
+                <option value="hours">hours</option>
+              </select>
+              </div>
+          </div>
+       
+          <!-- <div class="form-group">
             <label for="edit_department_id">Department</label>
             <select class="form-control" name="edit_department_id" id="edit_department_id"onChange="getDesignation()">
               <option value="">Select Department</option>
@@ -166,13 +182,13 @@
                 <option value="<?php echo $v['id'] ?>"> <?php echo $v['name'] ?> </option>
               <?php endforeach ?>
             </select>
-          </div>
+          </div> -->
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="edit_designation_id">Designation</label>
             <select class="form-control" name="edit_designation_id" id="edit_designation_id">
             </select>
-          </div>
+          </div> -->
 
         </div>
 
@@ -190,7 +206,7 @@
 <?php endif; ?>
 
 <?php if(in_array('deleteCourse', $user_permission)): ?>
-<!-- remove brand modal -->
+<!-- remove courses modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -292,19 +308,19 @@ $(document).ready(function() {
 function edit(id)
 { 
   $.ajax({
-    url: 'fetchCourseDataById/'+id,
+    url: '<?php echo base_url('courses/fetchCourseDataById/')?>'+id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
       
-      $("#edit_course_name").val(response.firstname);
-      $("#edit_lastname").val(response.lastname);
-      $("#edit_email").val(response.email);
-      $("#edit_username").val(response.username);
-      $("#edit_department_id").val(response.department_id);
+      $("#edit_course_name").val(response.name);
+      $("#edit_duration").val(response.duration);
+      $("#edit_duration_type").val(response.duration_type);
+      // $("#edit_department_id").val(response.department_id);
+      // $("#edit_designation_id").val(response.designation_id);
      
       // call the function
-      getDesignation();
+      // getDesignation();
 
       // submit the edit from 
       $("#editForm").unbind('submit').bind('submit', function() {
@@ -414,7 +430,10 @@ function removeFunc(id)
 
 function getDesignation(){
 var id = document.querySelector('#department_id').value
-var edit_id = document.querySelector('#edit_department_id').value
+// var edit_id = document.querySelector('#edit_department_id').value
+
+console.log(id)
+
 if(id){
   $.ajax({
       url: '<?php echo base_url('Designations/fetchDesignationByDeptId/')?>'+id,

@@ -69,4 +69,15 @@ class Model_training extends CI_Model
 		}
 	}
 
+
+	public function getTrainingDataByEmployee($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM trainings WHERE employee_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->result_array();
+		}
+	}
+
+
 }

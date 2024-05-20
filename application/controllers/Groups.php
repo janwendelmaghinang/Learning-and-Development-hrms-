@@ -14,10 +14,7 @@ class Groups extends Admin_Controller
 		$this->load->model('model_groups');
 	}
 
-	/* 
-	* It redirects to the manage group page
-	* As well as the group data is also been passed to display on the view page
-	*/
+
 	public function index()
 	{
 
@@ -31,11 +28,7 @@ class Groups extends Admin_Controller
 		$this->render_template('groups/index', $this->data);
 	}	
 
-	/*
-	* If the validation is not valid, then it redirects to the create page.
-	* If the validation is for each input field is valid then it inserts the data into the database 
-	* and it stores the operation message into the session flashdata and display on the manage group page
-	*/
+
 	public function create()
 	{
 
@@ -70,11 +63,7 @@ class Groups extends Admin_Controller
         }	
 	}
 
-	/*
-	* If the validation is not valid, then it redirects to the edit group page 
-	* If the validation is successfully then it updates the data into the database 
-	* and it stores the operation message into the session flashdata and display on the manage group page
-	*/
+
 	public function edit($id = null)
 	{
 
@@ -114,10 +103,7 @@ class Groups extends Admin_Controller
 		}
 	}
 
-	/*
-	* It removes the removes information from the database 
-	* and it stores the operation message into the session flashdata and display on the manage group page
-	*/
+
 	public function delete($id)
 	{
 

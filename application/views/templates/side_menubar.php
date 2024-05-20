@@ -12,7 +12,7 @@
         </li>
         
       <?php if($user_permission): ?>
-        <?php if(in_array('createGroup', $user_permission) || in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
+          <?php if(in_array('createGroup', $user_permission) || in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
             <li class="treeview" id="mainGroupNav">
               <a href="#">
                 <i class="fa fa-files-o"></i>
@@ -30,7 +30,7 @@
                 <?php endif; ?>
               </ul>
             </li>
-          <?php endif; ?>
+           <?php endif; ?>
 
           <?php if(in_array('createUser', $user_permission) || in_array('updateUser', $user_permission) || in_array('viewUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
             <li class="treeview" id="mainUserNav">
@@ -52,7 +52,6 @@
               </ul>
             </li>
           <?php endif; ?>
-
 
           <?php if(in_array('createDepartment', $user_permission) || in_array('updateDepartment', $user_permission) || in_array('viewDepartment', $user_permission) || in_array('deleteDepartment', $user_permission)): ?>
             <li id="departmentNav">
@@ -182,30 +181,6 @@
             </li>
           <?php endif; ?>
 
-          <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
-            <li id="designationNav">
-              <a href="<?php echo base_url('designations/') ?>">
-                <i class="fa fa-folder"></i> <span>Reports</span>
-              </a>
-            </li>
-          <?php endif; ?>
-
-              <!-- <?php if(in_array('createStore', $user_permission) || in_array('updateStore', $user_permission) || in_array('viewStore', $user_permission) || in_array('deleteStore', $user_permission)): ?>
-                <li id="storeNav">
-                  <a href="<?php echo base_url('stores/') ?>">
-                    <i class="fa fa-files-o"></i> <span>Stores</span>
-                  </a>
-                </li>
-              <?php endif; ?> -->
-
-              <!-- <?php if(in_array('createAttribute', $user_permission) || in_array('updateAttribute', $user_permission) || in_array('viewAttribute', $user_permission) || in_array('deleteAttribute', $user_permission)): ?>
-              <li id="attributeNav">
-                <a href="<?php echo base_url('attributes/') ?>">
-                  <i class="fa fa-files-o"></i> <span>Attributes</span>
-                </a>
-              </li>
-              <?php endif; ?> -->
-
             <!-- 
               <?php if(in_array('viewReports', $user_permission)): ?>
                 <li id="reportNav">
@@ -220,7 +195,6 @@
                 <li id="companyNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company</span></a></li>
               <?php endif; ?> -->
 
-            
             <!-- <li class="header">Settings</li> -->
 
             <!-- <?php if(in_array('viewProfile', $user_permission)): ?>
@@ -230,6 +204,17 @@
               <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>Setting</span></a></li>
             <?php endif; ?> -->
 
+
+            <!-- Employee Nav -->
+
+            <!-- <?php if(in_array('createMaterial', $user_permission) || in_array('updateMaterial', $user_permission) || in_array('viewMaterial', $user_permission) || in_array('deleteMaterial', $user_permission)): ?> -->
+            <!-- <?php endif; ?> -->
+              <li id="myAssessmentNav">
+                <a href="<?php echo base_url('emp_training') ?>">
+                  <i class="fa fa-files-o"></i> <span>My Assessment</span>
+                </a>
+              </li>
+            
         <?php endif; ?>
         <!-- user permission info -->
         <li><a href="<?php echo base_url('auth/logout') ?>"><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>

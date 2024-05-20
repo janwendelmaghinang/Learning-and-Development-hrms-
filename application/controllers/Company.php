@@ -15,11 +15,6 @@ class Company extends Admin_Controller
 		$this->load->model('model_company');
 	}
 
-    /* 
-    * It redirects to the company page and displays all the company information
-    * It also updates the company information into the database if the 
-    * validation for each input field is successfully valid
-    */
 	public function index()
 	{  
         if(!in_array('updateCompany', $this->permission)) {
