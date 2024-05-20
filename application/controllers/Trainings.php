@@ -206,25 +206,25 @@ class Trainings extends Admin_Controller
 
 	public function send_notification() {
 
-		$config = array(
-            'protocol'  => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
-            'smtp_port' => 587,
-            'smtp_user' => 'janwendelmaghinang@gmail.com',
-            'smtp_pass' => 'janwendel00000100',
-			'smtp_crypto' => 'tls',
-            'mailtype'  => 'html',
-            'charset'   => 'iso-8859-1',
-            'wordwrap'  => TRUE
-        );
+		// $config = array(
+        //     'protocol'  => 'smtp',
+        //     'smtp_host' => 'smtp.gmail.com',
+        //     'smtp_port' => 587,
+        //     'smtp_user' => 'janwendelmaghinang@gmail.com',
+        //     'smtp_pass' => 'janwendel00000100',
+		// 	'smtp_crypto' => 'tls',
+        //     'mailtype'  => 'html',
+        //     'charset'   => 'iso-8859-1',
+        //     'wordwrap'  => TRUE
+        // );
 
         $this->load->library('email');
        
 		$employee_email = 'maghinangjanwendel.pdm@gmail.com';
 
         // Email configuration
-        $config['mailtype'] = 'html';
-        $this->email->initialize($config);
+        // $config['mailtype'] = 'html';
+        // $this->email->initialize($config);
 
         // Compose email
         $subject = 'Assessment Notification';
