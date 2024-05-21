@@ -56,7 +56,7 @@
           <?php if(in_array('createDepartment', $user_permission) || in_array('updateDepartment', $user_permission) || in_array('viewDepartment', $user_permission) || in_array('deleteDepartment', $user_permission)): ?>
             <li id="departmentNav">
               <a href="<?php echo base_url('departments/') ?>">
-                <i class="glyphicon glyphicon-tags"></i> <span>Department</span>
+                <i class="glyphicon glyphicon-tags"></i> <span>Departments</span>
               </a>
             </li>
           <?php endif; ?>
@@ -64,7 +64,7 @@
           <?php if(in_array('createDesignation', $user_permission) || in_array('updateDesignation', $user_permission) || in_array('viewDesignation', $user_permission) || in_array('deleteDesignation', $user_permission)): ?>
             <li id="designationNav">
               <a href="<?php echo base_url('designations/') ?>">
-                <i class="fa fa-building"></i> <span>Designation</span>
+                <i class="fa fa-building"></i> <span>Designations</span>
               </a>
             </li>
           <?php endif; ?>
@@ -181,39 +181,28 @@
             </li>
           <?php endif; ?>
 
-            <!-- 
-              <?php if(in_array('viewReports', $user_permission)): ?>
-                <li id="reportNav">
-                  <a href="<?php echo base_url('reports/') ?>">
-                    <i class="glyphicon glyphicon-stats"></i> <span>Reports</span>
-                  </a>
-                </li>
-              <?php endif; ?> -->
+          <?php if(in_array('viewReports', $user_permission)): ?>
+            <li id="reportNav">
+              <a href="<?php echo base_url('reports/') ?>">
+                <i class="glyphicon glyphicon-stats"></i> <span>Reports</span>
+              </a>
+            </li>
+          <?php endif; ?>
 
-            <!-- 
-              <?php if(in_array('updateCompany', $user_permission)): ?>
-                <li id="companyNav"><a href="<?php echo base_url('company/') ?>"><i class="fa fa-files-o"></i> <span>Company</span></a></li>
-              <?php endif; ?> -->
+          <!-- <?php if(in_array('viewProfile', $user_permission)): ?>
+            <li><a href="<?php echo base_url('users/profile/') ?>"><i class="fa fa-user-o"></i> <span>Profile</span></a></li>
+          <?php endif; ?>
+          <?php if(in_array('updateSetting', $user_permission)): ?>
+            <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>Setting</span></a></li>
+          <?php endif; ?> -->
 
-            <!-- <li class="header">Settings</li> -->
-
-            <!-- <?php if(in_array('viewProfile', $user_permission)): ?>
-              <li><a href="<?php echo base_url('users/profile/') ?>"><i class="fa fa-user-o"></i> <span>Profile</span></a></li>
-            <?php endif; ?>
-            <?php if(in_array('updateSetting', $user_permission)): ?>
-              <li><a href="<?php echo base_url('users/setting/') ?>"><i class="fa fa-wrench"></i> <span>Setting</span></a></li>
-            <?php endif; ?> -->
-
-
-            <!-- Employee Nav -->
-
-            <!-- <?php if(in_array('createMaterial', $user_permission) || in_array('updateMaterial', $user_permission) || in_array('viewMaterial', $user_permission) || in_array('deleteMaterial', $user_permission)): ?> -->
-            <!-- <?php endif; ?> -->
-              <li id="myAssessmentNav">
-                <a href="<?php echo base_url('emp_training') ?>">
-                  <i class="fa fa-files-o"></i> <span>My Assessment</span>
-                </a>
-              </li>
+          <?php if(in_array('viewTest', $user_permission)): ?>
+            <li id="myAssessmentNav">
+              <a href="<?php echo base_url('emp_training') ?>">
+                <i class="fa fa-files-o"></i> <span>My Assessments</span>
+              </a>
+            </li>
+          <?php endif; ?>
             
         <?php endif; ?>
         <!-- user permission info -->

@@ -16,7 +16,10 @@ class Emp_training extends Admin_Controller
 	}
 	public function index()
 	{
-        
+		if(!in_array('viewTest', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
+
         $user_id = $this->session->userdata('id');
 		$is_admin = ($user_id == 1) ? true :false;
 

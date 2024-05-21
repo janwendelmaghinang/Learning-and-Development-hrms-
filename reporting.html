@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate Reports</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #4caf50;
+      color: white;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .form-section,
+    .report-output {
+      background-color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <body>
+    <header>
+      <h1>Generate Reports</h1>
+    </header>
+    <main>
+      <section class="form-section">
+        <h2>Report Criteria</h2>
+        <form id="reportForm">
+          <label for="reportType">Report Type:</label>
+          <select id="reportType" name="reportType">
+            <option value="sales">Sales Report</option>
+            <option value="inventory">Inventory Report</option>
+            <option value="customer">Customer Report</option>
+          </select>
+
+          <label for="startDate">Start Date:</label>
+          <input type="date" id="startDate" name="startDate" />
+
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate" />
+
+          <label for="format">Format:</label>
+          <select id="format" name="format">
+            <option value="pdf">PDF</option>
+            <option value="excel">Excel</option>
+          </select>
+
+          <button type="button" onclick="generateReport()">
+            Generate Report
+          </button>
+        </form>
+      </section>
+      <section class="report-output">
+        <h2>Report Output</h2>
+        <div id="output">
+          <!-- Generated reports will be displayed here -->
+        </div>
+      </section>
+    </main>
+    <script src="scripts.js"></script>
+  </body>
+</html>

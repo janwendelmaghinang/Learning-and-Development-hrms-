@@ -137,6 +137,13 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteAssessment" class="minimal"></td>
                       </tr>
                       <tr>
+                        <td>Employee Assessment</td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewTest" class="minimal"></td>
+                        <td> - </td>
+                      </tr>
+                      <tr>
                         <td>Training</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createTraining" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateTraining" class="minimal"></td>

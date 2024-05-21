@@ -5,12 +5,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Manage
-      <small>Department</small>
+       <strong>Courses / Assessments</strong>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Department</li>
+      <li class="active">assessments</li>
     </ol>
   </section>
 

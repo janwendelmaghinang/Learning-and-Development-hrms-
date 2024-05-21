@@ -244,6 +244,17 @@
                           if(in_array('deleteAssessment', $serialize_permission)) { echo "checked"; } 
                         } ?>></td>
                       </tr>
+
+                      
+                      <tr>
+                        <td>Employee assessment</td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewTest" <?php if($serialize_permission) {
+                          if(in_array('viewTest', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td> - </td>
+                      </tr>
                       
                       <tr>
                         <td>Training</td>

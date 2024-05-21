@@ -5,9 +5,6 @@ class Events extends Admin_Controller {
 
     public function __construct() {
         parent::__construct();
-        // $this->not_logged_in();
-        // Load necessary models and libraries
-        // $this->load->helper('url');
     }
 
     public function index() {
@@ -48,6 +45,6 @@ class Events extends Admin_Controller {
         // Pass formatted event data to the calendar view
         $this->data['events'] = json_encode($formatted_events); // Encode events array to JSON
         // Load the calendar view
-        $this->render_template('calendar', $this->data);
+        $this->render_template('events/index', $this->data);
     }
 }

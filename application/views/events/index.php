@@ -1,23 +1,6 @@
-<head>
-  <title>Event Calendar</title>
-  <!-- Include FullCalendar CSS -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"
-    rel="stylesheet"
-  />
-  <!-- Include jQuery -->
-  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script> -->
-  <!-- Include FullCalendar JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-  <!-- Calendar Script -->
-
-  <!-- Custom styles -->
-  <style>
+<style>
     #calendar {
-      padding: 5rem;
       background-color: white; /* Set calendar background color */
-      width: 1220px;
     }
     .location {
       font-size: 10px;
@@ -27,15 +10,37 @@
       font-size: 12px;
       color: darkgray;
     }
-  </style>
-  
-</head>
-<body>
-  <h2>Event Calendar</h2>
-  <!-- Calendar container -->
-  <div class="container" id="calendar"></div>
+</style>
 
-  <script>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>Events</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="#"><i class="fa fa-dashboard"></i> Home</a>
+      </li>
+      <li class="active">calendar</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="box">   
+        <div class="container" id="calendar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
     $(document).ready(function() {
         // Initialize FullCalendar
         $('#calendar').fullCalendar({
@@ -54,4 +59,9 @@
         });
     });
   </script>
-</body>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#eventNav").addClass("active");
+  });
+</script>
