@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fullscreen YouTube Video</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+      }
+      iframe {
+        border: none;
+      }
+      #fullscreen-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="fullscreen-btn">Go Fullscreen</button>
+    <iframe
+      width="853"
+      height="480"
+      src="https://youtu.be/LDB4uaJ87e0"
+      title="The Importance of Specialization in Coding"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+    <script>
+      document
+        .getElementById("fullscreen-btn")
+        .addEventListener("click", function () {
+          var iframe = document.getElementById("youtube-video");
+          if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
+          } else if (iframe.mozRequestFullScreen) {
+            // Firefox
+            iframe.mozRequestFullScreen();
+          } else if (iframe.webkitRequestFullscreen) {
+            // Chrome, Safari, and Opera
+            iframe.webkitRequestFullscreen();
+          } else if (iframe.msRequestFullscreen) {
+            // IE/Edge
+            iframe.msRequestFullscreen();
+          }
+        });
+    </script>
+  </body>
+</html>

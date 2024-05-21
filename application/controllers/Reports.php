@@ -8,7 +8,7 @@ class Reports extends Admin_Controller
 	{
 		parent::__construct();
 		$this->data['page_title'] = 'Stores';
-		// $this->load->model('model_reports');
+		$this->load->model('model_courses');
 	}
 
 	/* 
@@ -20,8 +20,20 @@ class Reports extends Admin_Controller
 		if(!in_array('viewReports', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
-		
-	
 		$this->render_template('reports/index', $this->data);
+	}
+
+	public function onlineCourse(){
+		$this->data['data'] = $this->model_courses->getCourseData();
+		$this->load->view('reports/onlinecourse', $this->data);
+	}
+	public function onlineassessment(){
+		$this->load->view('reports/onlineassessment');
+	}
+	public function onlinetraining(){
+		$this->load->view('reports/onlinetraining');
+	}
+	public function onlinematerial(){
+		$this->load->view('reports/onlinematerial');
 	}
 }	

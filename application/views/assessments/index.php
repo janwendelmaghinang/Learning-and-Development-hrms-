@@ -50,7 +50,7 @@
               <tr>
                 <th>Course</th>
                 <th>Passing Grade <span class="text-danger"></span></th>
-                <th>Max Attempt</th>
+                <!-- <th>Max Attempt</th> -->
                 <?php if(in_array('updateAssessment', $user_permission) || in_array('deleteAssessment', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>

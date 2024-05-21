@@ -48,7 +48,8 @@
               <thead>
               <tr>
                 <th>Courses</th>
-                <th>Passing Grade</th>
+                <th>Passing Grade %</th>
+                <th>Grade %</th>
                 <th>Status</th>
                 <th>Action</th>
                 <?php if(in_array('updateDepartment', $user_permission) || in_array('deleteDepartment', $user_permission)): ?>

@@ -61,7 +61,7 @@ class Assessments extends Admin_Controller {
 			$result['data'][$key] = array(
 				$course['name'],
                 $value['passing_grade'].' %' ,
-                $value['max_attempt'],
+                // $value['max_attempt'],
 				$buttons
 			);
 		} 

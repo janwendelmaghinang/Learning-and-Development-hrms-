@@ -93,6 +93,29 @@ class Materials extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function fetchMaterialCourseData($id)
+	{
+		$result = array('data' => array());
+     
+		$data = $this->model_materials->getMaterialCourseData($id);
+		
+		foreach ($data as $key => $value) {
+			// button
+			$buttons = '';
+			if(in_array('viewTest', $this->permission)) {
+				$buttons .= ' <a class="btn btn-default" href='.base_url('emp_training/open/'.$value['material_url'].'').'>View</a>';
+			}
+
+			$result['data'][$key] = array(
+				$value['material_name'],
+                $value['material_type'],
+				$buttons
+			);
+		} // /foreach
+
+		echo json_encode($result);
+	}
+
 	/*
 	* Its checks the Material form validation 
 	* and if the validation is successfully then it inserts the data into the database 

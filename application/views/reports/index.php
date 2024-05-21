@@ -36,16 +36,16 @@
             <table class="table ">
               
               <tr>
-                <td><a href="">ALL Online Assessment Courses</a></td>
+                <td><a target="_blank" href="<?php echo base_url('reports/onlinecourse') ?>">ALL Online Assessment Courses</a></td>
               </tr>
               <tr>
-                <td><a href="">Online Assessment Analytics</a></td>
+                <td><a target="_blank" href="<?php echo base_url('reports/onlineassessment') ?>">Online Assessment Analytics</a></td>
               </tr>
               <tr>
-                <td><a href="">Online Assessment Course Employee Analytics </a></td>
+                <td><a target="_blank" href="<?php echo base_url('reports/onlinetraining') ?>">Online Training Analytics </a></td>
               </tr>
               <tr>
-                <td><a href="">Online Assessment Course Material Analytics</a></td>
+                <td><a target="_blank" href="<?php echo base_url('reports/onlinematerial') ?>">Online Assessment Course Material Analytics</a></td>
               </tr>
             </table>
           </div>

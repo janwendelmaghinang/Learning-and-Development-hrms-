@@ -98,7 +98,7 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-
+      <?php if(in_array('viewTest', $user_permission)): ?>
       <div class="notif">
         <div class="notification-wrapper">
         <button class="notification-button">Notifications</button>
@@ -131,6 +131,7 @@
         </div>
       </div>
       </div>
+      <?php endif; ?>
 
     </nav>
   </header>

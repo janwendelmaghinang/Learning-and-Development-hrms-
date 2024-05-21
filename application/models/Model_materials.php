@@ -29,6 +29,15 @@ class Model_materials extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getMaterialCourseData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM training_materials WHERE course_id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->result_array();
+		}
+	}
+
 	public function create($data)
 	{
 		if($data) {

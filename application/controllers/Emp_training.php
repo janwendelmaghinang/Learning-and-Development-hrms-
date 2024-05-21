@@ -46,11 +46,12 @@ class Emp_training extends Admin_Controller
 			$department = $this->model_departments->getDepartmentData($emp['department_id']);
 			$designation = $this->model_designations->getDesignationData($emp['designation_id']);
 			$assessments =  $this->model_assessments->getAssessmentByCourse($value['course_id']);
-            $passing = (!$assessments == '') ? $assessments['passing_grade'] : 'No Assessments';
+            $passing = (!$assessments == '') ? $assessments['passing_grade'].' %' : 'No Assessments';
 
 			$result['data'][$key] = array(	
 				$course['name'],
-                $passing .' %',
+                $passing,
+				($value['grade'] != '') ? $value['grade'].'%' : '',
                 $value['status'],
 				$buttons
 			);
@@ -62,9 +63,11 @@ class Emp_training extends Admin_Controller
 	public function view($id = null)
 	{
         if($id){
+			$course_id = $this->model_training->getTrainingData($id);
 			$user_id = $this->session->userdata('id');
 			$is_admin = ($user_id == 1) ? true :false;
 			$this->data['id'] = $id;
+			$this->data['course_id'] = $course_id['course_id'];
 			$this->render_template('emp_training/view',$this->data);
 		}
 		else{
@@ -157,6 +160,29 @@ class Emp_training extends Admin_Controller
 		}
 
 		echo json_encode($response);
+	}
+    
+	public function viewcourse($id = ''){
+        if($id){
+			$user_id = $this->session->userdata('id');
+			$is_admin = ($user_id == 1) ? true :false;
+			$this->data['id'] = $id;
+			$this->render_template('emp_training/course',$this->data);
+		}
+		else{
+			redirect('emp_training', 'refresh');
+		}
+
+	}
+
+	public function open($param = ''){
+        if($param){
+            $this->data['link'] = $param;
+			$this->render_template('emp_training/open',$this->data);
+		}
+		else{
+			redirect('emp_training', 'refresh');
+		}
 	}
 
 

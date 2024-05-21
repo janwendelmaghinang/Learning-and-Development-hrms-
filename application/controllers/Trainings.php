@@ -67,7 +67,7 @@ class Trainings extends Admin_Controller
                 $designation['name'],
 			    $value['date_created'],
 				$course['name'],
-                $value['grade'] .' %',
+                $value['grade'],
 				$value['status'],
 				$buttons
 			);
