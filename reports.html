@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+      }
+      header img {
+        height: 80px;
+      }
+      header .company-info {
+        text-align: right;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <img src="company-logo.png" alt="Company Logo" />
+      </div>
+      <div class="company-info">
+        <p><strong>Company Name</strong></p>
+        <p>1234 Business Rd, Suite 100</p>
+        <p>Business City, BC 12345</p>
+        <p>Email: info@company.com | Phone: (555) 555-5555</p>
+      </div>
+    </header>
+
+    <h1>Employee Report</h1>
+
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>Full Name</th>
+            <th>Department</th>
+            <th>Position</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>John Doe</td>
+            <td>Human Resources</td>
+            <td>Manager</td>
+            <td>john.doe@example.com</td>
+            <td>(123) 456-7890</td>
+          </tr>
+          <tr>
+            <td>002</td>
+            <td>Jane Smith</td>
+            <td>Finance</td>
+            <td>Analyst</td>
+            <td>jane.smith@example.com</td>
+            <td>(098) 765-4321</td>
+          </tr>
+          <!-- Additional employee rows go here -->
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <p>
+        Generated on:
+        <script>
+          document.write(new Date().toLocaleDateString());
+        </script>
+      </p>
+    </footer>
+  </body>
+</html>
